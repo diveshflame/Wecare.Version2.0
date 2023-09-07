@@ -13,26 +13,26 @@ namespace WeCare.Data.Data
 {
     public class BookAppointmentData : IBookAppointmentData
     {
-        private readonly ISqldataAccess _dbAccess;
-        public BookAppointmentData(ISqldataAccess dbAccess)
+        private readonly ISqldataAccess dbAccess;
+        public BookAppointmentData(ISqldataAccess _dbAccess)
         {
-            _dbAccess = dbAccess;
+            dbAccess = _dbAccess;
  
 
         }
 
         List<DateTime> startTimes = new List<DateTime>();
         List<DateTime> endTimes = new List<DateTime>();
-        
-        string getDepartmentQuery = "SELECT Department_Id from department";
-        public Task<IEnumerable<DepartmentModel>> BookGetCo() => _db.LoadData<DepartmentModel, dynamic>(getDepartmentQuery, new { });
+
+        private readonly string getDepartmentQuery = "SELECT Department_Id from department";
+        public Task<IEnumerable<DepartmentModel>> BookGetCo() => dbAccess.LoadData<DepartmentModel, dynamic>(getDepartmentQuery, new { });
         public async Task<AppointmentModel?> BookGetDoc(string SelectedDepartment)
         {
         
             string GetDoc = @"SELECT d.Doctor_name FROM doctor d 
                               JOIN department dp ON d.DEPARTMENT_ID = dp.Department_Id
                               WHERE dp.Department_Name = @SelectedDepartment;";
-            var results2 = await _db.LoadData<AppointmentModel, dynamic>(GetDoc, new { SelectedDepartment = SelectedDepartment });
+            var results2 = await dbAccess.LoadData<AppointmentModel, dynamic>(GetDoc, new { SelectedDepartment = SelectedDepartment });
           
             return results2.FirstOrDefault();
 

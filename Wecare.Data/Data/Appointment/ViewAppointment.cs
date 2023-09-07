@@ -11,22 +11,22 @@ namespace WeCare.Data.Data.Appointment
             _db = db;
         }
 
-        #region Admin VIew Appointments
+        #region Admin View Appointments
         public Task<IEnumerable<AppointmentModel>> GetAllAppointments() => _db.LoadData<AppointmentModel, dynamic>(getAllAppointments, new { });
         public Task<IEnumerable<AppointmentModel>> GetTodayAppointment() => _db.LoadData<AppointmentModel, dynamic>(getTodayAppointment, new { });
         public Task<IEnumerable<AppointmentModel>> GetAppointmentHistory() => _db.LoadData<AppointmentModel, dynamic>(getAppointmentHistory, new { });
         #endregion
 
         #region Patient View Bookings
-        public Task<IEnumerable<AppointmentModel>> GetPatientAllApointments() => _db.LoadData<AppointmentModel, dynamic>(getPatientAllApointments, new { });
+        public Task<IEnumerable<AppointmentModel>> GetPatientAllApointments() => _db.LoadData<AppointmentModel, dynamic>(getPatientAllAppointments, new { });
         public Task<IEnumerable<AppointmentModel>> GetPatientTodayAppointment() => _db.LoadData<AppointmentModel, dynamic>(getPatientTodayAppointment, new { });
         public Task<IEnumerable<AppointmentModel>> GetPatientAppointmentHistory() => _db.LoadData<AppointmentModel, dynamic>(getPatientAppointmentHistory, new { });
         #endregion
 
 
         #region Delete appointment
-        public async Task UpdateDoc(int BookId, DateTime DatetimeNow) => await _db.SaveData(updateAppointment, new { BookID = BookId, TDate = DatetimeNow });
-        public async Task InsertIntoDocAvailability(int DocId, DateTime Starttime, DateTime Endtime) => await _db.SaveData(insertIntoAvailability, new { DocID = DocId, StartTime = Starttime, EndTime = Endtime });
+        public async Task UpdateDoc(int Appointment_Id, DateTime DatetimeNow) => await _db.SaveData(updateAppointment, new { Appointment_ID = Appointment_Id, TDate = DatetimeNow });
+        public async Task InsertIntoDocAvailability(int DocId, DateTime StartTime, DateTime EndTime) => await _db.SaveData(insertIntoAvailability, new { DocID = DocId, StartTime = StartTime, EndTime = EndTime });
 
         #endregion
 
@@ -68,7 +68,7 @@ namespace WeCare.Data.Data.Appointment
 	                                    AND DATE(APPOINTMENT_STARTTIME) < CURRENT_DATE
                                     ORDER BY APPOINTMENT_STARTTIME";
         //User Appointment
-        string getPatientAllApointments = @"SELECT APPOINTMENT_ID,
+        string getPatientAllAppointments = @"SELECT APPOINTMENT_ID,
 	                                            APPOINTMENT.DOCTOR_ID,
 	                                            DOCTOR_NAME,
 	                                            APPOINTMENT_STARTTIME,
@@ -118,9 +118,9 @@ namespace WeCare.Data.Data.Appointment
 			                                            WHERE ACTIVE_SESSION = 1)
                                             ORDER BY APPOINTMENT_STARTTIME";
         //Update the appointment table set the DeletedTimeStamp value to the current time
-        string updateAppointment = "UPDATE Booking_Table SET Deleted_TimeStamp = @TDate::timestamp WHERE Booking_Id = @BookID;";
+        string updateAppointment = "UPDATE APPOINTMENT SET DELETED_TIMESTAMP = @TDATE::timestamp WHERE APPOINTMENT_ID = @Appointment_Id;";
         //Insert the deleted slot to Doctor_Availability table
-        string insertIntoAvailability = "insert into Doctor_Availability(doctor_id,available_starttime,available_endtime) values (@DocID,@StartTime,@EndTime)";
+        string insertIntoAvailability = "INSERT INTO DOCTOR_AVAILABILITY(DOCTOR_ID,AVAILABLE_STARTTIME,AVAILABLE_ENDTIME) VALUES  (@DocID,@StartTime,@EndTime)";
 
         #endregion
 

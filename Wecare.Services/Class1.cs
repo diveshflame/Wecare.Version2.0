@@ -2,6 +2,7 @@
 {
     public class Class1
     {
+        //dummy comment
 
     }
 }

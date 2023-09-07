@@ -73,7 +73,7 @@ namespace WeCare.Data.Data.Doctor
 
         //------------------------------------------------------------------------------------------------
 
-        public async Task<IEnumerable<string>> GetConsultantDescriptions(string doctorName)
+        public async Task<IEnumerable<string>> GetConsultantDescription(string doctorName)
         {
             try
             {
@@ -116,6 +116,8 @@ namespace WeCare.Data.Data.Doctor
 
 
         //------------------------------------------------------------------------------------------------
+
+
     }
 
 

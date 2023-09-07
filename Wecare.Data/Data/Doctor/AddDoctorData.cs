@@ -15,7 +15,7 @@ namespace WeCare.Data.Data.Doctor
         {
             _db = db;
         }
-        string GetCon = "SELECT consultant_desc from consultant_type";
+        string GetCon = "SELECT consultant_desc from consultant_type AS Department_Name";
         public Task<IEnumerable<DepartmentModel>> Get() => _db.LoadData<DepartmentModel, dynamic>(GetCon, new { });
         public Task<IEnumerable<DepartmentModel>> GetDep() => _db.LoadData<DepartmentModel, dynamic>(GetCon, new { });
         public async Task AddDoctor(string text, string selectedConsultation)

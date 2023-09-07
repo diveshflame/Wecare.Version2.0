@@ -62,7 +62,7 @@ namespace Wecare.Api.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            public async Task AddDoct()
+            async Task AddDoct()
             {
                 string text = "Arjun";
                 string selectedConsultation = "Root Canal";
@@ -85,7 +85,7 @@ namespace Wecare.Api.Controllers
                     /*  return StatusCode(500, $"Internal server error: {ex.Message}");*/
                 }
             }
-
+        }
         // PUT api/<AddDoctorController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)

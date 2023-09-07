@@ -8,8 +8,8 @@ namespace WeCare.Data.Model
 {
     public class DoctorAvailabilityModel
     {
-        public int doctor_id { get; set; }
-        public DateTime avaialable_starttime { get; set; }
-        public DateTime available_endttime { get; set; }
+        public int Doctor_Id { get; set; }
+        public DateTime Avaialable_StartTime { get; set; }
+        public DateTime Available_EndtTime { get; set; }
     }
 }

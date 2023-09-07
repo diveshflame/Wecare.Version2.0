@@ -35,11 +35,8 @@ namespace WeCare.Data.Data.Doctor
 
         #region Update Doctor
         //Check Availability
-        public async Task<DoctorAvailabilityModel?> CheckDocAvailability(int DocId)
-        {
-            var results = await _db.LoadData<DoctorAvailabilityModel, dynamic>(checkDocAvailability, new { DocID = DocId });
-            return results.FirstOrDefault();
-        }
+        public async Task<DoctorAvailabilityModel?> CheckDocAvailability(int DocId) results = await _db.LoadData<DoctorAvailabilityModel, dynamic>(checkDocAvailability, new { DocID = DocId });
+         
         //UpdateDoctor
         public async Task UpdateDoc(int DocId, int DeptId) => await _db.SaveData(updateDoc, new { DocID = DocId, DeptID = DeptId });
 

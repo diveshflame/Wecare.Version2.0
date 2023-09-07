@@ -8,12 +8,13 @@ namespace WeCare.Data.Model
 {
     public class AppointmentModel
     {
-        public int BookID { get; set; }
+        public int Appointment_Id { get; set; }
         public int UserID { get; set; } 
         public int Doctor_Id { get; set; }
-        public int Consultant_Id { get; set; }
-        public DateTime StartTime { get; set;}
-        public DateTime EndTime { get; set; }
+        public int Department_Id { get; set; }
+        public DateTime Appointment_StartTime { get; set;}
+        public DateTime Appointment_EndTime { get; set; }
+        public DateTime Deleted_TimeStamp { get; set; }
 
     }
 }

@@ -13,10 +13,10 @@ namespace WeCare.Data.Data
 {
     public class BookAppointmentData : IBookAppointmentData
     {
-        private readonly ISqldataAccess _db;
-        public BookAppointmentData(ISqldataAccess db)
+        private readonly ISqldataAccess _dbAccess;
+        public BookAppointmentData(ISqldataAccess dbAccess)
         {
-            _db = db;
+            _dbAccess = dbAccess;
  
 
         }
@@ -24,14 +24,15 @@ namespace WeCare.Data.Data
         List<DateTime> startTimes = new List<DateTime>();
         List<DateTime> endTimes = new List<DateTime>();
         
-        string GetCon = "SELECT consultant_desc from consultant_type";
-        public Task<IEnumerable<DepartmentModel>> BookGetCo() => _db.LoadData<DepartmentModel, dynamic>(GetCon, new { });
-        public async Task<AppointmentModel?> BookGetDoc(string selectedConsultation)
+        string getDepartmentQuery = "SELECT Department_Id from department";
+        public Task<IEnumerable<DepartmentModel>> BookGetCo() => _db.LoadData<DepartmentModel, dynamic>(getDepartmentQuery, new { });
+        public async Task<AppointmentModel?> BookGetDoc(string SelectedDepartment)
         {
-            string GetConID = "SELECT consultant_id from consultant_Type where @Selectedconsult = consultant_desc";
-            var results = await _db.LoadData<AppointmentModel, dynamic>(GetConID, new { Selectedconsult = selectedConsultation });
-            string GetDoc = "SELECT doctor_Name from doctor_table where @ConsultId=consultant_id";
-            var results2 = await _db.LoadData<AppointmentModel, dynamic>(GetDoc, new { ConsultId = results });
+        
+            string GetDoc = @"SELECT d.Doctor_name FROM doctor d 
+                              JOIN department dp ON d.DEPARTMENT_ID = dp.Department_Id
+                              WHERE dp.Department_Name = @SelectedDepartment;";
+            var results2 = await _db.LoadData<AppointmentModel, dynamic>(GetDoc, new { SelectedDepartment = SelectedDepartment });
           
             return results2.FirstOrDefault();
 
@@ -41,7 +42,7 @@ namespace WeCare.Data.Data
         public async Task<AppointmentModel?> BookGetTime(string doc, DateTime selectedDate)
         {
 
-            string GetDocId = "SELECT doctor_Id from doctor_table where @doctorName=Doctor_Name";
+            string GetDocId = "SELECT Doctor_Id from doctor_table where @doctorName=Doctor_Name";
             var results = await _db.LoadData<AppointmentModel, dynamic>(GetDocId, new { doctorName = doc });
             string GetTime = "SELECT available_starttime, available_endtime FROM doctor_availability WHERE DATE(doctor_availability.available_starttime) = @time AND DATE(doctor_availability.available_endtime) = @time AND doctor_availability.doctor_id = @docid EXCEPT SELECT available_starttime, available_endtime FROM booking_table, doctor_availability WHERE booking_table.StartTime = available_starttime AND booking_table.doctor_id = @docid AND booking_table.EndTime = available_endtime AND Deleted_TimeStamp IS NULL ORDER BY available_starttime, available_endtime;";
             var results2 = await _db.LoadData<AppointmentModel, dynamic>(GetTime, new { docid = results, time = selectedDate });

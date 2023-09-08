@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Wecare.Services.Interfaces;
 using WeCare.Data.Model;
 
-namespace Wecare.Services
+namespace Wecare.Services.Service
 {
-    public class UserAuthenticationService :IUserAuthenticationService
+    public class UserAuthenticationService : IUserAuthenticationService
     {
         private readonly IUserAuthenticationService _userAuthenticationData;
 
@@ -24,14 +24,14 @@ namespace Wecare.Services
 
         public async Task<bool> CheckUser(string userName, string password)
         {
-            if(await _userAuthenticationData.CheckUser(userName, password) == true)
+            if (await _userAuthenticationData.CheckUser(userName, password) == true)
                 return true;
             return false;
         }
 
         public async Task<bool> IsUserSuperUser(string userName, string password)
         {
-            if(await _userAuthenticationData.IsUserSuperUser(userName, password) == true)
+            if (await _userAuthenticationData.IsUserSuperUser(userName, password) == true)
                 return true;
             return false;
         }

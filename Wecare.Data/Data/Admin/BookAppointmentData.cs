@@ -20,8 +20,11 @@ namespace WeCare.Data.Data
 
 
         }
-        private readonly string getDepartmentQuery = "SELECT Department_Id from department";
-        public Task<IEnumerable<DepartmentModel>> GetDepartmentId() => dbAccess.LoadData<DepartmentModel, dynamic>(getDepartmentQuery, new { });
+        private readonly string getDepartmentQuery = "SELECT Department_name from department";
+        private readonly string getDepartmentIdQuery = "SELECT Department_Id from department where @department_name";
+
+        public Task<IEnumerable<DepartmentModel>> GetDepartmentId(string departmentName) => dbAccess.LoadData<DepartmentModel, dynamic>(getDepartmentIdQuery, new { department_name = departmentName});
+        public Task<IEnumerable<DepartmentModel>> GetDepartmentName() => dbAccess.LoadData<DepartmentModel, dynamic>(getDepartmentQuery, new { });
         public async Task<DoctorModel?> GetDoctorNames(string SelectedDepartment)
         {
 

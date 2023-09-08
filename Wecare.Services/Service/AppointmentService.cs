@@ -10,7 +10,7 @@ using WeCare.Data.Model;
 
 namespace Wecare.Services.Service
 {
-    public class AppointmentService : IAppointmentService,IBookAppointmentData
+    public class AppointmentService : IAppointmentService
     {
         private readonly IBookAppointmentData dbAccess;
         public AppointmentService(IBookAppointmentData _dbAccess)
@@ -19,17 +19,18 @@ namespace Wecare.Services.Service
 
         }
 
-        public async Task<IEnumerable<DepartmentModel>> GetDepartmentId()
+        public async Task<IEnumerable<DepartmentModel>> GetDepartmentName()
         {
-            return await dbAccess.GetDepartmentId();
+            return await dbAccess.GetDepartmentName();
         }
+      
 
-        public async Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc)
+            public async Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc)
         {
             return await dbAccess.GetDepartmentIdForDoctor(selectedDep, doc);
         }
 
-         public async Task<AppointmentModel?> GetDoctorAvailableTime(string doc, DateTime selectedDate)
+        public async Task<AppointmentModel?> GetDoctorAvailableTime(string doc, DateTime selectedDate)
         {
             return await dbAccess.GetDoctorAvailableTime(doc, selectedDate);
         }
@@ -43,11 +44,13 @@ namespace Wecare.Services.Service
         {
             return await dbAccess.GetUserID();
         }
-            
+
 
         public async Task InsertAppointment(string selectedDep, DateTime selectedDate, string doc, DateTime StartTime, DateTime EndTime)
         {
-           await dbAccess.InsertAppointment(selectedDep, selectedDate, doc, StartTime, EndTime);
+            var department_id= await dbAccess.GetDepartmentId(selectedDep); 
+            var department=department_id.FirstOrDefault().ToString();
+            await dbAccess.InsertAppointment(department, selectedDate, doc, StartTime, EndTime);
         }
     }
 }

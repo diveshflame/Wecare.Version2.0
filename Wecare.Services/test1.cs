@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeCare.Data.DataAccess
-{
-    internal class Dummy2
+namespace Wecare.Services
+{ //dummy comment
+    internal class test1
     {
     }
 }

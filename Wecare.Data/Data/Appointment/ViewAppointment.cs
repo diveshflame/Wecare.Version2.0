@@ -1,11 +1,4 @@
-﻿using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeCare.Data.DataAccess;
+﻿using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
 
 namespace WeCare.Data.Data.Appointment
@@ -18,104 +11,116 @@ namespace WeCare.Data.Data.Appointment
             _db = db;
         }
 
-        #region Admin VIew Appointments
-        public Task<IEnumerable<AppointmentModel>> ViewAll() => _db.LoadData<AppointmentModel, dynamic>(viewAll, new { });
-        public Task<IEnumerable<AppointmentModel>> ViewToday() => _db.LoadData<AppointmentModel, dynamic>(viewToday, new { });
-        public Task<IEnumerable<AppointmentModel>> ViewHistory() => _db.LoadData<AppointmentModel, dynamic>(viewHistory, new { });
+        #region Admin View Appointments
+        public Task<IEnumerable<AppointmentModel>> GetAllAppointments() => _db.LoadData<AppointmentModel, dynamic>(getAllAppointments, new { });
+        public Task<IEnumerable<AppointmentModel>> GetTodayAppointment() => _db.LoadData<AppointmentModel, dynamic>(getTodayAppointment, new { });
+        public Task<IEnumerable<AppointmentModel>> GetAppointmentHistory() => _db.LoadData<AppointmentModel, dynamic>(getAppointmentHistory, new { });
         #endregion
 
         #region Patient View Bookings
-        public Task<IEnumerable<AppointmentModel>> ViewUserAll() => _db.LoadData<AppointmentModel, dynamic>(viewUserAll, new { });
-        public Task<IEnumerable<AppointmentModel>> ViewUserToday() => _db.LoadData<AppointmentModel, dynamic>(viewUserToday, new { });
-        public Task<IEnumerable<AppointmentModel>> ViewUserHistory() => _db.LoadData<AppointmentModel, dynamic>(viewUserHistory, new { });
+        public Task<IEnumerable<AppointmentModel>> GetPatientAllApointments() => _db.LoadData<AppointmentModel, dynamic>(getPatientAllAppointments, new { });
+        public Task<IEnumerable<AppointmentModel>> GetPatientTodayAppointment() => _db.LoadData<AppointmentModel, dynamic>(getPatientTodayAppointment, new { });
+        public Task<IEnumerable<AppointmentModel>> GetPatientAppointmentHistory() => _db.LoadData<AppointmentModel, dynamic>(getPatientAppointmentHistory, new { });
         #endregion
 
 
         #region Delete appointment
-        public async Task UpdateDoc(int BookId, DateTime DatetimeNow) => await _db.SaveData(updateBookTable, new { BookID = BookId, TDate = DatetimeNow });
-        public async Task InsertIntoDocAvailability(int DocId, DateTime Starttime, DateTime Endtime) => await _db.SaveData(insertIntoAvailability, new { DocID = DocId, StartTime = Starttime, EndTime = Endtime });
+        public async Task UpdateDoc(int Appointment_Id, DateTime DatetimeNow) => await _db.SaveData(updateAppointment, new { Appointment_ID = Appointment_Id, TDate = DatetimeNow });
+        public async Task InsertIntoDocAvailability(int DocId, DateTime StartTime, DateTime EndTime) => await _db.SaveData(insertIntoAvailability, new { DocID = DocId, StartTime = StartTime, EndTime = EndTime });
 
         #endregion
 
         #region Queries
+        string getAllAppointments = @"SELECT NAME,
+	                                    DOCTOR_NAME,
+	                                    APPOINTMENT_STARTTIME,
+	                                    APPOINTMENT_ENDTIME,
+	                                    DEPARTMENT_NAME
+                                    FROM USERDETAILS
+                                    INNER JOIN APPOINTMENT ON USERDETAILS.USERID = APPOINTMENT.USERID
+                                    INNER JOIN DOCTOR ON APPOINTMENT.DOCTOR_ID = DOCTOR.DOCTOR_ID
+                                    INNER JOIN DEPARTMENT ON DOCTOR.DEPARTMENT_ID = DEPARTMENT.DEPARTMENT_ID
+                                    WHERE DELETED_TIMESTAMP IS NULL
+	                                    AND DATE(APPOINTMENT_STARTTIME) >= CURRENT_DATE
+                                    ORDER BY APPOINTMENT_STARTTIME";
+        string getTodayAppointment = @"SELECT NAME,
+	                                    DOCTOR_NAME,
+	                                    APPOINTMENT_STARTTIME,
+	                                    APPOINTMENT_ENDTIME,
+	                                    DEPARTMENT_NAME
+                                    FROM USERDETAILS
+                                    INNER JOIN APPOINTMENT ON USERDETAILS.USERID = APPOINTMENT.USERID
+                                    INNER JOIN DOCTOR ON APPOINTMENT.DOCTOR_ID = DOCTOR.DOCTOR_ID
+                                    INNER JOIN DEPARTMENT ON DOCTOR.DEPARTMENT_ID = DEPARTMENT.DEPARTMENT_ID
+                                    WHERE DELETED_TIMESTAMP IS NULL
+	                                    AND DATE(APPOINTMENT_STARTTIME) = CURRENT_DATE
+                                    ORDER BY APPOINTMENT_STARTTIME";
+        string getAppointmentHistory = @"SELECT NAME,
+	                                    DOCTOR_NAME,
+	                                    APPOINTMENT_STARTTIME,
+	                                    APPOINTMENT_ENDTIME,
+	                                    DEPARTMENT_NAME
+                                    FROM USERDETAILS
+                                    INNER JOIN APPOINTMENT ON USERDETAILS.USERID = APPOINTMENT.USERID
+                                    INNER JOIN DOCTOR ON APPOINTMENT.DOCTOR_ID = DOCTOR.DOCTOR_ID
+                                    INNER JOIN DEPARTMENT ON DOCTOR.DEPARTMENT_ID = DEPARTMENT.DEPARTMENT_ID
+                                    WHERE DELETED_TIMESTAMP IS NULL
+	                                    AND DATE(APPOINTMENT_STARTTIME) < CURRENT_DATE
+                                    ORDER BY APPOINTMENT_STARTTIME";
+        //User Appointment
+        string getPatientAllAppointments = @"SELECT APPOINTMENT_ID,
+	                                            APPOINTMENT.DOCTOR_ID,
+	                                            DOCTOR_NAME,
+	                                            APPOINTMENT_STARTTIME,
+	                                            APPOINTMENT_ENDTIME,
+	                                            DEPARTMENT_NAME
+                                            FROM APPOINTMENT
+                                            JOIN DOCTOR ON APPOINTMENT.DOCTOR_ID = DOCTOR.DOCTOR_ID
+                                            JOIN DEPARTMENT ON APPOINTMENT.DEPARTMENT_ID = DEPARTMENT.DEPARTMENT_ID
+                                            WHERE DELETED_TIMESTAMP IS NULL
+	                                            AND DATE(APPOINTMENT_STARTTIME) >= CURRENT_DATE
+	                                            AND APPOINTMENT.USERID IN
+		                                            (SELECT USERID
+			                                            FROM USERDETAILS
+			                                            WHERE ACTIVE_SESSION = 1)
+                                            ORDER BY APPOINTMENT_STARTTIME";
 
-        string viewAll = @"SELECT NAME,
-	                        DOCTOR_NAME,
-	                        STARTTIME,
-	                        ENDTIME,
-	                        CONSULTANT_DESC
-                        FROM USERDETAILS
-                        INNER JOIN BOOKING_TABLE ON USERDETAILS.USERID = BOOKING_TABLE.USERID
-                        INNER JOIN DOCTOR_TABLE ON BOOKING_TABLE.DOCTOR_ID = DOCTOR_TABLE.DOCTOR_ID
-                        INNER JOIN CONSULTANT_TYPE ON DOCTOR_TABLE.CONSULTANT_ID = CONSULTANT_TYPE.CONSULTANT_ID
-                        WHERE DELETED_TIMESTAMP IS NULL
-	                        AND DATE(STARTTIME) >= CURRENT_DATE
-                        ORDER BY STARTTIME";
-        string viewToday = @"SELECT NAME,
-	                            DOCTOR_NAME,
-	                            STARTTIME,
-	                            ENDTIME,
-	                            CONSULTANT_DESC
-                            FROM USERDETAILS
-                            INNER JOIN BOOKING_TABLE ON USERDETAILS.USERID = BOOKING_TABLE.USERID
-                            INNER JOIN DOCTOR_TABLE ON BOOKING_TABLE.DOCTOR_ID = DOCTOR_TABLE.DOCTOR_ID
-                            INNER JOIN CONSULTANT_TYPE ON DOCTOR_TABLE.CONSULTANT_ID = CONSULTANT_TYPE.CONSULTANT_ID
-                            WHERE DELETED_TIMESTAMP IS NULL
-	                            AND DATE(STARTTIME) = CURRENT_DATE
-                            ORDER BY STARTTIME";
-        string viewHistory = @"SELECT NAME,
-	                                DOCTOR_NAME,
-	                                STARTTIME,
-	                                ENDTIME,
-	                                CONSULTANT_DESC
-                               FROM USERDETAILS
-                            INNER JOIN BOOKING_TABLE ON USERDETAILS.USERID = BOOKING_TABLE.USERID
-                            INNER JOIN DOCTOR_TABLE ON  BOOKING_TABLE.DOCTOR_ID = DOCTOR_TABLE.DOCTOR_ID
-                            INNER JOIN CONSULTANT_TYPE ON DOCTOR_TABLE.CONSULTANT_ID = CONSULTANT_TYPE.CONSULTANT_ID
-                                AND DELETED_TIMESTAMP IS NULL AND DATE(STARTTIME) < CURRENT_DATE
-                            ORDER BY STARTTIME ";
-
-        string viewUserAll = @"SELECT BOOKING_ID,
-                                    BOOKING_TABLE.DOCTOR_ID,
-	                                CONSULTANT_DESC,
-	                                DOCTOR_NAME,
-	                                STARTTIME,
-	                                ENDTIME
-                               FROM BOOKING_TABLE
-                               JOIN DOCTOR_TABLE ON BOOKING_TABLE.DOCTOR_ID = DOCTOR_TABLE.DOCTOR_ID
-                               JOIN CONSULTANT_TYPE ON BOOKING_TABLE.CONSULTANT_ID = CONSULTANT_TYPE.CONSULTANT_ID
-                               WHERE DELETED_TIMESTAMP IS NULL AND DATE(STARTTIME)>= CURRENT_DATE AND BOOKING_TABLE.USERID IN
-                                    (SELECT USERID
-                                        FROM USERDETAILS
-                                        WHERE ACTIVE_SESSION = 1) ORDER BY STARTTIME";
-        string viewUserToday = @"SELECT BOOKING_ID,
-                                    BOOKING_TABLE.DOCTOR_ID,
-	                                CONSULTANT_DESC,
-	                                DOCTOR_NAME,
-	                                STARTTIME,
-	                                ENDTIME
-                               FROM BOOKING_TABLE
-                               JOIN DOCTOR_TABLE ON BOOKING_TABLE.DOCTOR_ID = DOCTOR_TABLE.DOCTOR_ID
-                               JOIN CONSULTANT_TYPE ON BOOKING_TABLE.CONSULTANT_ID = CONSULTANT_TYPE.CONSULTANT_ID
-                               WHERE DELETED_TIMESTAMP IS NULL AND DATE(STARTTIME)= CURRENT_DATE AND BOOKING_TABLE.USERID IN
-                                    (SELECT USERID
-                                        FROM USERDETAILS
-                                        WHERE ACTIVE_SESSION = 1) ORDER BY STARTTIME";
-        string viewUserHistory = @"SELECT BOOKING_ID,
-                                    BOOKING_TABLE.DOCTOR_ID,
-	                                CONSULTANT_DESC,
-	                                DOCTOR_NAME,
-	                                STARTTIME,
-	                                ENDTIME
-                               FROM BOOKING_TABLE
-                               JOIN DOCTOR_TABLE ON BOOKING_TABLE.DOCTOR_ID = DOCTOR_TABLE.DOCTOR_ID
-                               JOIN CONSULTANT_TYPE ON BOOKING_TABLE.CONSULTANT_ID = CONSULTANT_TYPE.CONSULTANT_ID
-                               WHERE  DELETED_TIMESTAMP IS NULL AND DATE(STARTTIME) <CURRENT_DATE AND  BOOKING_TABLE.USERID IN
-                                    (SELECT USERID
-                                        FROM USERDETAILS
-                                        WHERE ACTIVE_SESSION = 1) ORDER BY STARTTIME";
-        string updateBookTable = "UPDATE Booking_Table SET Deleted_TimeStamp = @TDate::timestamp WHERE Booking_Id = @BookID;";
-        string insertIntoAvailability = "insert into Doctor_Availability(doctor_id,available_starttime,available_endtime) values (@DocID,@StartTime,@EndTime)";
+        string getPatientTodayAppointment = @"SELECT APPOINTMENT_ID,
+	                                            APPOINTMENT.DOCTOR_ID,
+	                                            DOCTOR_NAME,
+	                                            APPOINTMENT_STARTTIME,
+	                                            APPOINTMENT_ENDTIME,
+	                                            DEPARTMENT_NAME
+                                            FROM APPOINTMENT
+                                            JOIN DOCTOR ON APPOINTMENT.DOCTOR_ID = DOCTOR.DOCTOR_ID
+                                            JOIN DEPARTMENT ON APPOINTMENT.DEPARTMENT_ID = DEPARTMENT.DEPARTMENT_ID
+                                            WHERE DELETED_TIMESTAMP IS NULL
+	                                            AND DATE(APPOINTMENT_STARTTIME) = CURRENT_DATE
+	                                            AND APPOINTMENT.USERID IN
+		                                            (SELECT USERID
+			                                            FROM USERDETAILS
+			                                            WHERE ACTIVE_SESSION = 1)
+                                            ORDER BY APPOINTMENT_STARTTIME";
+        string getPatientAppointmentHistory = @"SELECT APPOINTMENT_ID,
+	                                            APPOINTMENT.DOCTOR_ID,
+	                                            DOCTOR_NAME,
+	                                            APPOINTMENT_STARTTIME,
+	                                            APPOINTMENT_ENDTIME,
+	                                            DEPARTMENT_NAME
+                                            FROM APPOINTMENT
+                                            JOIN DOCTOR ON APPOINTMENT.DOCTOR_ID = DOCTOR.DOCTOR_ID
+                                            JOIN DEPARTMENT ON APPOINTMENT.DEPARTMENT_ID = DEPARTMENT.DEPARTMENT_ID
+                                            WHERE DELETED_TIMESTAMP IS NULL
+	                                            AND DATE(APPOINTMENT_STARTTIME) < CURRENT_DATE
+	                                            AND APPOINTMENT.USERID IN
+		                                            (SELECT USERID
+			                                            FROM USERDETAILS
+			                                            WHERE ACTIVE_SESSION = 1)
+                                            ORDER BY APPOINTMENT_STARTTIME";
+        //Update the appointment table set the DeletedTimeStamp value to the current time
+        string updateAppointment = "UPDATE APPOINTMENT SET DELETED_TIMESTAMP = @TDATE::timestamp WHERE APPOINTMENT_ID = @Appointment_Id;";
+        //Insert the deleted slot to Doctor_Availability table
+        string insertIntoAvailability = "INSERT INTO DOCTOR_AVAILABILITY(DOCTOR_ID,AVAILABLE_STARTTIME,AVAILABLE_ENDTIME) VALUES  (@DocID,@StartTime,@EndTime)";
 
         #endregion
 

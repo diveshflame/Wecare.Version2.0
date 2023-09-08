@@ -3,10 +3,10 @@ using WeCare.Data.Model;
 
 namespace WeCare.Data.Data.Appointment
 {
-    public class ViewAppointment : IViewAppointment
+    public class ViewAppointmentData : IViewAppointmentData
     {
         private readonly ISqldataAccess _db;
-        public ViewAppointment(ISqldataAccess db)
+        public ViewAppointmentData(ISqldataAccess db)
         {
             _db = db;
         }

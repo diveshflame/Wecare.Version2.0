@@ -20,32 +20,9 @@ namespace Wecare.Api.Controllers
         {
             _db = db;
         }
-        [HttpGet]
-        public async Task<IActionResult> AddDoctor()
-        {
-            try
-            {
-                var data = await _db.GetDep();
-
-
-
-                if (data != null)
-                {
-
-                    return Ok(data);
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-
+       
         //Arjun changes
+        [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -62,30 +39,8 @@ namespace Wecare.Api.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            public async Task AddDoct()
-            {
-                string text = "Arjun";
-                string selectedConsultation = "Root Canal";
-                try
-                {
-                    await _db.AddDoctor(text, selectedConsultation);
-
-                    /*  if (data != null)
-                      {
-
-                          return Ok(data);
-                      }
-                      else
-                      {
-                          return NotFound();
-                      }*/
-                }
-                catch (Exception ex)
-                {
-                    /*  return StatusCode(500, $"Internal server error: {ex.Message}");*/
-                }
-            }
-
+           
+        }
         // PUT api/<AddDoctorController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)

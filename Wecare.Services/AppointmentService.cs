@@ -9,7 +9,7 @@ using WeCare.Data.Model;
 
 namespace Wecare.Services
 {
-    public class AppointmentService : IAppointmentService
+    public class AppointmentService : IAppointmentService,IBookAppointmentData
     {
         private readonly IBookAppointmentData dbAccess;
         public AppointmentService(IBookAppointmentData _dbAccess)
@@ -23,7 +23,30 @@ namespace Wecare.Services
             return await dbAccess.GetDepartmentId();
         }
 
+        public async Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc)
+        {
+            return await dbAccess.GetDepartmentIdForDoctor(selectedDep, doc);
+        }
 
+         public async Task<AppointmentModel?> GetDoctorAvailableTime(string doc, DateTime selectedDate)
+        {
+            return await dbAccess.GetDoctorAvailableTime(doc, selectedDate);
+        }
 
+        public async Task<DoctorModel?> GetDoctorNames(string SelectedDepartment)
+        {
+            return await dbAccess.GetDoctorNames(SelectedDepartment);
+        }
+
+        public async Task<AppointmentModel?> GetUserID()
+        {
+            return await dbAccess.GetUserID();
+        }
+            
+
+        public async Task InsertAppointment(string selectedDep, DateTime selectedDate, string doc, DateTime StartTime, DateTime EndTime)
+        {
+           await dbAccess.InsertAppointment(selectedDep, selectedDate, doc, StartTime, EndTime);
+        }
     }
 }

@@ -13,4 +13,9 @@
     <PackageReference Include="Npgsql" Version="7.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Wecare.Api\Wecare.Api.csproj" />
+    <ProjectReference Include="..\Wecare.Data\Wecare.Data.csproj" />
+  </ItemGroup>
+
 </Project>

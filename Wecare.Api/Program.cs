@@ -1,3 +1,4 @@
+using WeCare.Data.Data.Appointment;
 using WeCare.Data.Data.Doctor;
 using WeCare.Data.DataAccess;
 
@@ -11,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ISqldataAccess, SqldataAccess>();
 builder.Services.AddScoped<IAddDoctorData, AddDoctorData>();
+builder.Services.AddScoped<IViewAppointment, ViewAppointment>();
 
 var app = builder.Build();
 

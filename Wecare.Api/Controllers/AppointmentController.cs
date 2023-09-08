@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WeCare.Data.Data;
+using WeCare.Data.Data.Doctor;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,12 +10,41 @@ namespace Wecare.Api.Controllers
     [ApiController]
     public class AppointmentController : ControllerBase
     {
+        //Arjun changes
+        private readonly IBookAppointmentData _db;
+
+        public AppointmentController(IBookAppointmentData db)
+        {
+            _db = db;
+        }
         // GET: api/<AppointmentController>
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        
+            public async Task<IActionResult> Get()
+            {
+            string test = "ENT";
+                try
+                {
+                    var data = await _db.GetDoctorNames(test);
+
+
+
+                    if (data != null)
+                    {
+
+                        return Ok(data);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                }
+            }
+        
 
         // GET api/<AppointmentController>/5
         [HttpGet("{id}")]

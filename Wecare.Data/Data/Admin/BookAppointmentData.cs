@@ -22,13 +22,13 @@ namespace WeCare.Data.Data
         }
         private readonly string getDepartmentQuery = "SELECT Department_Id from department";
         public Task<IEnumerable<DepartmentModel>> GetDepartmentId() => dbAccess.LoadData<DepartmentModel, dynamic>(getDepartmentQuery, new { });
-        public async Task<AppointmentModel?> GetDoctorNames(string SelectedDepartment)
+        public async Task<DoctorModel?> GetDoctorNames(string SelectedDepartment)
         {
 
             string GetDoc = @"SELECT d.Doctor_name FROM doctor d 
                               JOIN department dp ON d.DEPARTMENT_ID = dp.Department_Id
                               WHERE dp.Department_Name = @SelectedDepartmentParameter;";
-            var result = await dbAccess.LoadData<AppointmentModel, dynamic>(GetDoc, new { SelectedDepartmentParameter = SelectedDepartment });
+            var result = await dbAccess.LoadData<DoctorModel, dynamic>(GetDoc, new { SelectedDepartmentParameter = SelectedDepartment });
 
             return result.FirstOrDefault();
 
@@ -63,7 +63,7 @@ namespace WeCare.Data.Data
             var results = await dbAccess.LoadData<AppointmentModel, dynamic>(GetTime, new { doctorName = doc, time = selectedDate });
             return results.FirstOrDefault();
         }
-        public async Task<AppointmentModel?> GetDepartmentID(string selectedDep, string doc)
+        public async Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc)
         {
             string GetDepartmentID = @"SELECT department_id AS id
                                         FROM department

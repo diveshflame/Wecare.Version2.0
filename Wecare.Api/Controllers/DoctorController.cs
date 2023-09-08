@@ -40,7 +40,6 @@ namespace Wecare.Api.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
-           
         }
         // PUT api/<AddDoctorController>/5
         [HttpPut("{id}")]

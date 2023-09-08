@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Wecare.Api\Wecare.Api.csproj" />
     <ProjectReference Include="..\Wecare.Data\Wecare.Data.csproj" />
   </ItemGroup>
 

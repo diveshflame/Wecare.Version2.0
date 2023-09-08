@@ -63,7 +63,7 @@ namespace WeCare.Data.Data
             var results = await dbAccess.LoadData<AppointmentModel, dynamic>(GetTime, new { doctorName = doc, time = selectedDate });
             return results.FirstOrDefault();
         }
-        public async Task<AppointmentModel?> GetDepartmentID(string selectedDep, string doc)
+        public async Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc)
         {
             string GetDepartmentID = @"SELECT department_id AS id
                                         FROM department

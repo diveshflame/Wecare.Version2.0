@@ -8,21 +8,22 @@ namespace Wecare.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddDoctorController : ControllerBase
+    public class DoctorController : ControllerBase
     {
         // GET: api/<AddDoctorController>
     
 
         //Arjun changes
-        private readonly IAddDoctorData _db;
+        private readonly IDoctorData _db;
 
-        public AddDoctorController(IAddDoctorData db)
+        public DoctorController(IDoctorData db)
         {
             _db = db;
         }
        
         //Arjun changes
         [HttpGet]
+
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

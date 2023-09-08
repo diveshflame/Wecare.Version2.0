@@ -2,7 +2,7 @@
 
 namespace WeCare.Data.Data.Appointment
 {
-    public interface IViewAppointment
+    public interface IViewAppointmentData
     {
         Task<IEnumerable<AppointmentModel>> GetAllAppointments();
         Task<IEnumerable<AppointmentModel>> GetAppointmentHistory();

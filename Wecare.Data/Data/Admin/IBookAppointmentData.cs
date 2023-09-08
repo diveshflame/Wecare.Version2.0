@@ -4,7 +4,7 @@ namespace WeCare.Data.Data
 {
     public interface IBookAppointmentData
     {
-        Task<IEnumerable<DepartmentModel>> GetDepartmentId();
+        Task<IEnumerable<DepartmentModel>> GetDepartmentId(string departmentName);
         Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc);
         Task<IEnumerable<DepartmentModel>> GetDepartmentName();
         Task<AppointmentModel?> GetDoctorAvailableTime(string doc, DateTime selectedDate);

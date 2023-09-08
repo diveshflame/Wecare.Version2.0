@@ -22,8 +22,9 @@ namespace Wecare.Services
         {
             return await dbAccess.GetDepartmentName();
         }
+      
 
-        public async Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc)
+            public async Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc)
         {
             return await dbAccess.GetDepartmentIdForDoctor(selectedDep, doc);
         }
@@ -46,7 +47,9 @@ namespace Wecare.Services
 
         public async Task InsertAppointment(string selectedDep, DateTime selectedDate, string doc, DateTime StartTime, DateTime EndTime)
         {
-            await dbAccess.InsertAppointment(selectedDep, selectedDate, doc, StartTime, EndTime);
+            var department_id= await dbAccess.GetDepartmentId(selectedDep); 
+            var department=department_id.FirstOrDefault().ToString();
+            await dbAccess.InsertAppointment(department, selectedDate, doc, StartTime, EndTime);
         }
     }
 }

@@ -1,83 +1,76 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using WeCare.Data.Data.Appointment;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Wecare.Api.Controllers
 {
-    public class ViewAppointmentController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ViewAppointmentController : ControllerBase
     {
-        // GET: ViewAppointmentController
-        public ActionResult Index()
+        private readonly IViewAppointmentData _db;
+
+        public ViewAppointmentController(IViewAppointmentData db)
         {
-            return View();
+            _db = db;
+        }
+        // GET: api/<ViewAppointmentController>
+        [HttpGet]
+        
+            public async Task<IActionResult> Get()
+            {
+                try
+                {
+                    var data = await _db.GetPatientTodayAppointment();
+
+                    if (data != null)
+                    {
+                         return Ok(data);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                }
         }
 
-        // GET: ViewAppointmentController/Details/5
-        public ActionResult Details(int id)
+            
+
+        // GET api/<ViewAppointmentController>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
         {
-            return View();
+            return "value";
         }
 
-        // GET: ViewAppointmentController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ViewAppointmentController/Create
+        // POST api/<ViewAppointmentController>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public void Post([FromBody] string value)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            int DocId = 1001;
+            DateTime StartTime = DateTime.Parse("2023 - 09 - 13 11:30:00");
+            DateTime EndTime = DateTime.Parse("2023 - 09 - 13 12:30:00");
+             _db.InsertIntoDocAvailability( DocId, StartTime, EndTime);
         }
 
-        // GET: ViewAppointmentController/Edit/5
-        public ActionResult Edit(int id)
+        // PUT api/<ViewAppointmentController>/5
+        [HttpPut]
+        public void Put([FromBody] string value)
         {
-            return View();
+            int AppointmentId = 3003;
+            DateTime DateTimeNow = DateTime.Now;
+            _db.UpdateDoc(AppointmentId, DateTimeNow);
         }
 
-        // POST: ViewAppointmentController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        // DELETE api/<ViewAppointmentController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ViewAppointmentController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ViewAppointmentController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace WeCare.Data.Data.Doctor
             _db = db;
         }
 
-        public async Task<IEnumerable<string>> GET()
+        public async Task<IEnumerable<string>> GetDoctorName()
         {
             string sqlCommand = "SELECT Doctor_Name FROM Doctor_Table";
 
@@ -113,11 +113,9 @@ namespace WeCare.Data.Data.Doctor
             return (await _db.LoadData<int, dynamic>(sqlCommand, parameters)).FirstOrDefault();
         }
 
-
-
         //------------------------------------------------------------------------------------------------
 
-        public async Task<int> SelectionConchangedAsync(DateTime dat1, string doctorName, DateTime startDate, DateTime EndDate)
+        public async Task<int> SelectionConchanged(DateTime dat1, string doctorName, DateTime startDate, DateTime EndDate)
         {
 
             int doctorId = await GetDoctorID(doctorName);
@@ -137,41 +135,15 @@ namespace WeCare.Data.Data.Doctor
             await _db.SaveData(insert, parameters);
         }
 
-        public async Task InsertMultipleAvailabilitiesAsync(int doctorId, DateTime currentDate)
+        public async Task InsertMultipleAvailabilities(int doctorId, DateTime currentDate)
         {
-                string insert = "INSERT INTO doctor_availability (Doctor_Id, available_starttime, available_endtime) VALUES ";
-                for (int i = 10; i <= 18; i++)
-                {
-                    DateTime startTime = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + $"{i:D2}:00:00.000");
-                    DateTime endTime = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + $"{i + 1:D2}:00:00.000");
-
-                    insert += $"(@doctorId, @startTime{i}, @endTime{i}),";
-                }
-
-                // Remove the trailing comma
-                insert = insert.TrimEnd(',');
+                string insert = "INSERT INTO doctor_availability (doctor_id,available_starttime,available_endtime) VALUES (@doctorid,@starttime,@endtime)";
 
                 var parameters = new
                 {
-                    doctorId,
-                    startTime10 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "10:00:00.000"),
-                    endTime10 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "11:00:00.000"),
-                    startTime11 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "11:00:00.000"),
-                    endTime11 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "12:00:00.000"),
-                    startTime12 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "12:00:00.000"),
-                    endTime12 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "13:00:00.000"),
-                    startTime13 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "13:00:00.000"),
-                    endTime13 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "14:00:00.000"),
-                    startTime14 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "14:00:00.000"),
-                    endTime14 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "15:00:00.000"),
-                    startTime15 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "15:00:00.000"),
-                    endTime15 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "16:00:00.000"),
-                    startTime16 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "16:00:00.000"),
-                    endTime16 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "17:00:00.000"),
-                    startTime17 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "17:00:00.000"),
-                    endTime17 = DateTime.Parse(currentDate.ToString("dd/MM/yyyy ") + "18:00:00.000"),
+                    //The parameters should be called from Services
                 };
-            await _db.SaveData(insert, parameters);         
+                await _db.SaveData(insert, parameters);         
         }
     }
 }

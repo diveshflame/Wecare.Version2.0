@@ -1,6 +1,6 @@
 ﻿using WeCare.Data.Model;
 
-namespace Wecare.Services
+namespace Wecare.Services.Interfaces
 {
     public interface IAppointmentService
     {

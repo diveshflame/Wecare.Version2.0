@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wecare.Services.Interfaces;
 using WeCare.Data.Data;
 using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
 
-namespace Wecare.Services
+namespace Wecare.Services.Service
 {
     public class AppointmentService : IAppointmentService,IBookAppointmentData
     {

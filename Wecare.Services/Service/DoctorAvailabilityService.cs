@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wecare.Services.Interfaces;
 using WeCare.Data.Data.Doctor;
 
 namespace Wecare.Services.Service
@@ -18,27 +19,27 @@ namespace Wecare.Services.Service
 
         public async Task<IEnumerable<string>> GetDoctorNames()
         {
-            return await _doctorAvailabilityData.GetDoctorName();
+            return await _doctorAvailabilityData.GetDoctorNames();
         }
 
         public async Task<IEnumerable<string>> GetStartTimes()
         {
-            return await _doctorAvailabilityData.StartTime();
+            return await _doctorAvailabilityData.GetStartTimes();
         }
 
         public async Task<IEnumerable<string>> GetEndTimes()
         {
-            return await _doctorAvailabilityData.GetEndTimesAsync();
+            return await _doctorAvailabilityData.GetEndTimes();
         }
 
         public async Task<IEnumerable<string>> GetConsultantDescriptions(string doctorName)
         {
-            return await _doctorAvailabilityData.GetConsultantDescription(doctorName);
+            return await _doctorAvailabilityData.GetConsultantDescriptions(doctorName);
         }
 
         public async Task<int> CheckDoctorAvailability(DateTime selectedDateTime, string doctorName, DateTime startDate, DateTime endDate)
         {
-            return await _doctorAvailabilityData.SelectionConchanged(selectedDateTime, doctorName, startDate, endDate);
+            return await _doctorAvailabilityData.CheckDoctorAvailability(selectedDateTime, doctorName, startDate, endDate);
         }
 
         public async Task InsertAvailability(int doctorId, DateTime startTime, DateTime endTime)

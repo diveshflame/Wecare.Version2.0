@@ -4,10 +4,8 @@ namespace WeCare.Data.Data.Doctor
 {
     public interface IDoctorData
     {
-        Task AddDoctor(string text, string selectedConsultation);
+        Task AddDoctor(string DoctorName, string selectedDepartment);
         Task<IEnumerable<DoctorAvailabilityModel>> CheckDocAvailability(int DocId);
-     
-        Task<IEnumerable<DepartmentModel>> GetDepartment();
         Task UpdateDoc(int DocId, int DeptId);
     }
 }

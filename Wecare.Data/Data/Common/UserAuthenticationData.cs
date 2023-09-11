@@ -32,10 +32,10 @@ namespace Wecare.Data.Data.User_Authentication
             // the SQL command to check if the user exists and SuperUser column is 0
             string sqlCommand = @"
                 SELECT COUNT(*)
-                FROM Users
-                WHERE UserName = @UserName
-                AND Password = @Password
-                AND SuperUser = 0";
+                FROM userdetails
+                WHERE userName = @UserName
+                AND password = @Password
+                AND super_user = 0";
 
                 var parameters = new { UserName = userName, Password = password };
                 var result = await _db.LoadData<int, dynamic>(sqlCommand, parameters);
@@ -50,10 +50,10 @@ namespace Wecare.Data.Data.User_Authentication
             // the SQL command to check if the user is a SuperUser (SuperUser column is 1)
             string sqlCommand = @"
                 SELECT COUNT(*)
-                FROM Users
-                WHERE UserName = @UserName
-                AND Password = @Password
-                AND SuperUser = 1";
+                FROM userdetails
+                WHERE username = @UserName
+                AND password = @Password
+                AND super_user = 1";
 
                 var parameters = new { UserName = userName, Password = password };
 

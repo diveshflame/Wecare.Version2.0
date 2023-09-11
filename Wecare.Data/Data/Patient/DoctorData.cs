@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
+using Wecare.Data.Data.Common;
 
 namespace WeCare.Data.Data.Doctor
 {
@@ -17,6 +18,10 @@ namespace WeCare.Data.Data.Doctor
             dbAccess = _dbAccess;
 
         }
+
+        private readonly ICommonFunctions CommonAccess;
+
+
         #region Update Doctor
         //Check Doctor Availability before updating
         public Task<IEnumerable<DoctorAvailabilityModel>> CheckDocAvailability(int DocId) => dbAccess.LoadData<DoctorAvailabilityModel, dynamic>(checkDocAvailability, new { DocID = DocId });
@@ -26,28 +31,26 @@ namespace WeCare.Data.Data.Doctor
 
         #endregion
 
-       
-        string GetDepartmentNames = "SELECT consultant_desc AS Department_Name from consultant_type AS Department_Name";
 
-        public Task<IEnumerable<DepartmentModel>> GetDepartment() => dbAccess.LoadData<DepartmentModel, dynamic>(GetDepartmentNames, new { });
-        public async Task AddDoctor(string text, string selectedConsultation)
+        public async Task AddDoctor(string DoctorName, string selectedDepartment)
         {
 
-            string GetConID = "SELECT consultant_id AS Department_Id from consultant_Type where @Selectedconsult = consultant_desc";
-            var results = await dbAccess.LoadData<DepartmentModel, dynamic>(GetConID, new { Selectedconsult = selectedConsultation });
-            int consultantId = results.FirstOrDefault()?.Department_Id ?? 0;
-            string GetDocID = "SELECT doctor_Id from doctor_table where @Doctor_Name=doctor_name";
-            var results2 = await dbAccess.LoadData<DoctorModel, dynamic>(GetDocID, new { Doctor_Name = text });
 
-            string InsertDoc = "Insert into doctor_table(Doctor_name,consultant_id) values(@DoctorN,@Consult_Id)";
-            if (consultantId != null)
+            var results = await CommonAccess.GetDepartmentID(selectedDepartment);
+
+            int DepartmentId = results.Department_Id;
+
+            var results2 = await CommonAccess.GetDoctorId(DoctorName);
+
+            string InsertDoc = "Insert into doctor(doctor_name,department_id) values(@Doctor_Name,@Department_Id)";
+            if (DepartmentId != null)
             {
                 //This name already Exists
 
             }
             else
             {
-                await dbAccess.SaveData(InsertDoc, new { DoctorN = text, Consult_Id = consultantId });
+                await dbAccess.SaveData(InsertDoc, new { Doctor_Name = DoctorName, Department_Id = DepartmentId });
             }
         }
 

@@ -11,6 +11,6 @@ namespace WeCare.Data.Data.Appointment
         Task<IEnumerable<AppointmentModel>> GetPatientTodayAppointment();
         Task<IEnumerable<AppointmentModel>> GetTodayAppointment();
         Task InsertIntoDocAvailability(int DocId, DateTime Starttime, DateTime Endtime);
-        Task UpdateDoc(int BookId, DateTime DatetimeNow);
+        Task UpdateAppointmentTable(int BookId, DateTime DatetimeNow);
     }
 }

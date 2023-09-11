@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using WeCare.Data.Data.Doctor;
+using WeCare.Data.DataAccess;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,44 +10,47 @@ namespace Wecare.Api.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        // GET: api/<AddDoctorController>
-    
-
-        //Arjun changes
-        private readonly IDoctorData _db;
-
-        public DoctorController(IDoctorData db)
+        private readonly IDoctorData dbAccess;
+        public DoctorController(IDoctorData _dbAccess)
         {
-            _db = db;
+            dbAccess = _dbAccess;
+
         }
-       
-        //Arjun changes
+        // GET: api/<DoctorController>
         [HttpGet]
-
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            int DocId = 1001;
+            var data = await dbAccess.CheckDocAvailability(DocId);
+
+
+            return Ok(data);
+
         }
 
-        // GET api/<AddDoctorController>/5
+        // GET api/<DoctorController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<AddDoctorController>
+        // POST api/<DoctorController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
-        // PUT api/<AddDoctorController>/5
+
+        // PUT api/<DoctorController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put([FromBody] int did,int ddid)
         {
+            int DocId = 1002;
+            int DeptId = 502;
+            dbAccess.UpdateDoc(DocId, DeptId);
         }
 
-        // DELETE api/<AddDoctorController>/5
+        // DELETE api/<DoctorController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

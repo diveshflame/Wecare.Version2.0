@@ -2,7 +2,7 @@
 
 namespace Wecare.Services.Service
 {
-    public interface IAddDoctorService
+    public interface IDoctorService
     {
         Task AddDoctor(string text, string selectedDepartment);
         Task<DepartmentModel?> GetDepartment();

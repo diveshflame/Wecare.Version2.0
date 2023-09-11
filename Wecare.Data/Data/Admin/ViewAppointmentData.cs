@@ -25,7 +25,7 @@ namespace WeCare.Data.Data.Appointment
 
 
         #region Delete appointment
-        public async Task UpdateDoc(int Appointment_Id, DateTime DatetimeNow) => await _db.SaveData(updateAppointment, new { Appointment_ID = Appointment_Id, TDate = DatetimeNow });
+        public async Task UpdateAppointmentTable(int Appointment_Id, DateTime DatetimeNow) => await _db.SaveData(updateAppointment, new { Appointment_ID = Appointment_Id, TDate = DatetimeNow });
         public async Task InsertIntoDocAvailability(int DocId, DateTime StartTime, DateTime EndTime) => await _db.SaveData(insertIntoAvailability, new { DocID = DocId, StartTime = StartTime, EndTime = EndTime });
 
         #endregion

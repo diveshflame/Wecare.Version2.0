@@ -64,7 +64,7 @@ namespace Wecare.Api.Controllers
         {
             int AppointmentId = 3003;
             DateTime DateTimeNow = DateTime.Now;
-            _db.UpdateDoc(AppointmentId, DateTimeNow);
+            _db.UpdateAppointmentTable(AppointmentId, DateTimeNow);
         }
 
         // DELETE api/<ViewAppointmentController>/5

@@ -46,7 +46,7 @@ namespace Wecare.Services.Service
             else
             {
                 DateTime dateTime = DateTime.Now;
-                await _viewAppointmentData.UpdateDoc(appointmentModel.Appointment_Id, dateTime);
+                await _viewAppointmentData.UpdateAppointmentTable(appointmentModel.Appointment_Id, dateTime);
                 await _viewAppointmentData.InsertIntoDocAvailability(appointmentModel.Doctor_Id, appointmentModel.Appointment_StartTime, appointmentModel.Appointment_EndTime);
             }
             return !_canDelete;

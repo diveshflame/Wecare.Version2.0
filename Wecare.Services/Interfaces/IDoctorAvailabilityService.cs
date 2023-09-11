@@ -1,4 +1,4 @@
-﻿namespace Wecare.Services.Service
+﻿namespace Wecare.Services.Interfaces
 {
     public interface IDoctorAvailabilityService
     {

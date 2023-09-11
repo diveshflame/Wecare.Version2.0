@@ -23,7 +23,7 @@ namespace Wecare.Services.Service
         }
         public async Task<DepartmentModel?> GetDepartment()
         {
-            var Department = await dbAccess.GetDepartment();
+            var Department = await functions.GetDepartmentName();
             return Department.FirstOrDefault();
         }
         public async Task AddDoctor(string text, string selectedDepartment)

@@ -22,8 +22,10 @@ namespace WeCare.Data.Data
         }
         private readonly string getDepartmentQuery = "SELECT Department_name from department";
         private readonly string getDepartmentIdQuery = "SELECT Department_Id from department where @department_name";
+        private readonly string getDocId = "SELECT doctor_Id from doctor where @doctor_name=Doctor_Name";
 
-        public Task<IEnumerable<DepartmentModel>> GetDepartmentId(string departmentName) => dbAccess.LoadData<DepartmentModel, dynamic>(getDepartmentIdQuery, new { department_name = departmentName});
+        public Task<IEnumerable<DepartmentModel>> GetDepartmentId(string departmentName) => dbAccess.LoadData<DepartmentModel, dynamic>(getDepartmentIdQuery, new { department_name = departmentName });
+        public Task<IEnumerable<DoctorModel>> GetDoctorId(string doctorName) => dbAccess.LoadData<DoctorModel, dynamic>(getDocId, new { doctor_name = doctorName });
         public Task<IEnumerable<DepartmentModel>> GetDepartmentName() => dbAccess.LoadData<DepartmentModel, dynamic>(getDepartmentQuery, new { });
         public async Task<DoctorModel?> GetDoctorNames(string SelectedDepartment)
         {
@@ -91,10 +93,9 @@ namespace WeCare.Data.Data
             var results2 = await dbAccess.LoadData<AppointmentModel, dynamic>(userID, new { });//add userid
             return results2.FirstOrDefault();
         }
-        public async Task InsertAppointment(string selectedDep, DateTime selectedDate, string doc, DateTime StartTime, DateTime EndTime)
+        public async Task InsertAppointment(int UserID, string DeptID, DateTime selectedDate, string doc, DateTime StartTime, DateTime EndTime)
         {
-            AppointmentModel? DeptID = await GetDepartmentID(selectedDep, doc);
-            AppointmentModel? UserID = await GetUserID();
+
             string insertStatement = "INSERT INTO Booking_Table (userid,department_id,doctor_id,APPOINTMENT_STARTTIME,APPOINTMENT_ENDTIME) VALUES (@userID,@DeptType,@docSelected,@StartSlot,@EndSlot)";
 
             var parameters = new

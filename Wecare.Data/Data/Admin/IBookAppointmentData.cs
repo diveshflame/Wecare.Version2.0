@@ -8,8 +8,9 @@ namespace WeCare.Data.Data
         Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc);
         Task<IEnumerable<DepartmentModel>> GetDepartmentName();
         Task<AppointmentModel?> GetDoctorAvailableTime(string doc, DateTime selectedDate);
+        Task<IEnumerable<DoctorModel>> GetDoctorId(string doctorName);
         Task<DoctorModel?> GetDoctorNames(string SelectedDepartment);
         Task<AppointmentModel?> GetUserID();
-        Task InsertAppointment(string selectedDep, DateTime selectedDate, string doc, DateTime StartTime, DateTime EndTime);
+        Task InsertAppointment(int UserID, string DeptID, DateTime selectedDate, string doc, DateTime StartTime, DateTime EndTime);
     }
 }

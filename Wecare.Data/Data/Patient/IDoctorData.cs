@@ -6,7 +6,7 @@ namespace WeCare.Data.Data.Doctor
     {
         Task AddDoctor(string text, string selectedConsultation);
         Task<IEnumerable<DoctorAvailabilityModel>> CheckDocAvailability(int DocId);
-        Task<IEnumerable<DepartmentModel>> GetDep();
+        Task<IEnumerable<DepartmentModel>> GetDepartment();
         Task UpdateDoc(int DocId, int DeptId);
     }
 }

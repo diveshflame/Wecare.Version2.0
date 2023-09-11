@@ -31,15 +31,32 @@ namespace Wecare.Services.Service
             await dbAccess.AddDoctor(text, selectedDepartment);
             string message = "Succesfully Inserted";
         }
-         public async Task UpdateDoctor(string selectedDocName, string selectedDepartName)
+
+        #region Display the values in view
+        public Task<IEnumerable<DepartmentModel>> GetDepartmentName()=> functions.GetDepartmentName();
+        public Task<IEnumerable<DoctorModel>> GetDoctorName() => functions.GetDoctorName();
+        #endregion
+
+
+        #region Update Doctor
+        public async Task<bool> UpdateDoctor(string selectedDocName, string selectedDepartName)
         {
           
            var getDoctorId= await functions.GetDoctorId(selectedDocName);
            var getDepartmentId= await functions.GetDepartmentID(selectedDepartName);
-         //  await dbAccess.UpdateDoc(getDoctorId, getDepartmentId);
-            
+            var count= await dbAccess.CheckDocAvailability(getDoctorId.Doctor_Id);
+            //count.FirstOrDefault();
+            bool valid = false;
+            if(count==null)
+            {
+                return !valid;
+            }
+            else
+            {
+                await dbAccess.UpdateDoc(getDoctorId.Doctor_Id, getDepartmentId.Department_Id);
+            }
+            return valid;
         }
-
-
+        #endregion
     }
 }

@@ -29,7 +29,7 @@ namespace WeCare.Data.Data.Doctor
        
         string GetDepartmentNames = "SELECT consultant_desc AS Department_Name from consultant_type AS Department_Name";
 
-        public Task<IEnumerable<DepartmentModel>> GetDep() => dbAccess.LoadData<DepartmentModel, dynamic>(GetDepartmentNames, new { });
+        public Task<IEnumerable<DepartmentModel>> GetDepartment() => dbAccess.LoadData<DepartmentModel, dynamic>(GetDepartmentNames, new { });
         public async Task AddDoctor(string text, string selectedConsultation)
         {
 

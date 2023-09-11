@@ -22,7 +22,7 @@ namespace Wecare.Data.Data.User_Authentication
             string sqlCommand = @"
                 INSERT INTO Users (UserName, FullName, Age, Gender, Email, Phone, Password)
                 VALUES (@UserName, @FullName, @Age, @Gender, @Email, @Phone, @Password)";
-            await _db.SaveData(sqlCommand, User);
+                await _db.SaveData(sqlCommand, User);
         }
         #endregion
 
@@ -37,9 +37,9 @@ namespace Wecare.Data.Data.User_Authentication
                 AND Password = @Password
                 AND SuperUser = 0";
 
-            var parameters = new { UserName = userName, Password = password };
-            var result = await _db.LoadData<int, dynamic>(sqlCommand, parameters);
-            return result.FirstOrDefault() > 0;
+                var parameters = new { UserName = userName, Password = password };
+                var result = await _db.LoadData<int, dynamic>(sqlCommand, parameters);
+                return result.FirstOrDefault() > 0;
 
         }
         #endregion
@@ -55,10 +55,10 @@ namespace Wecare.Data.Data.User_Authentication
                 AND Password = @Password
                 AND SuperUser = 1";
 
-            var parameters = new { UserName = userName, Password = password };
+                var parameters = new { UserName = userName, Password = password };
 
-            var result = await _db.LoadData<int, dynamic>(sqlCommand, parameters);
-            return result.FirstOrDefault() > 0;
+                var result = await _db.LoadData<int, dynamic>(sqlCommand, parameters);
+                return result.FirstOrDefault() > 0;
         }
         #endregion
 
@@ -71,10 +71,10 @@ namespace Wecare.Data.Data.User_Authentication
                 WHERE UserName = @UserName
                 AND Password = @CurrentPassword";
 
-            var parameters = new { UserName = userName, CurrentPassword = currentPassword, NewPassword = newPassword };
+                var parameters = new { UserName = userName, CurrentPassword = currentPassword, NewPassword = newPassword };
 
-            await _db.SaveData(sqlCommand, parameters);
-            return true;
+                await _db.SaveData(sqlCommand, parameters);
+                return true;
 
         }
         #endregion

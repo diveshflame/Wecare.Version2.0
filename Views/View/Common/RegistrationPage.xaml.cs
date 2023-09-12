@@ -12,6 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Views.ViewModel;
+using Views.ViewModel.Common;
+using Wecare.Services.Interfaces;
 
 namespace Views.View.Common
 {
@@ -23,9 +26,15 @@ namespace Views.View.Common
         private SecureString enteredPassword = new SecureString();
         private bool isMasked = false;
         private string originalText;
-        public RegistrationPage()
+
+        private IUserAuthenticationService userAuthenticationService;
+        public RegistrationPage(IUserAuthenticationService userAuthService)
         {
             InitializeComponent();
+            userAuthenticationService = userAuthService;
+            var registrationViewModel = new RegistrationViewModel(userAuthenticationService);
+
+            //DataContext = registrationViewModel();
         }
 
         private void MaskButton_Click(object sender, RoutedEventArgs e)
@@ -44,7 +53,6 @@ namespace Views.View.Common
 
         private string MaskText(string input)
         {
-            // Replace each character with an asterisk
             return new string('*', input.Length);
         }
 
@@ -54,12 +62,6 @@ namespace Views.View.Common
             return input.Replace("*", "");
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //Window1 window1 = new Window1();
-            //window1.Show();
-            //this.Close();
-        }
     }
 }
 

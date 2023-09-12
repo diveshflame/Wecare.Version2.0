@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Views.ViewModel.Patient
 {
-    class Class1
+    class ViewPatientappointment
     {
+
     }
 }

@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    
                     >
 
     <!--Menu button-->
@@ -135,7 +134,7 @@
         </Style.Triggers>
     </Style>
 
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                   
     
     <!--View Appointment-->
     <Style x:Key="TabButton" TargetType="RadioButton">

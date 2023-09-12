@@ -7,18 +7,10 @@
              xmlns:viewModel="clr-namespace:Views.ViewModel.Admin"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-
-    <UserControl.DataContext>
+    <!--<UserControl DataContext="{local:DISource Type=local:AdminViewAppointmentViewModel}">-->
+        <UserControl.DataContext>
         <viewModel:AdminViewAppointmentViewModel/>
     </UserControl.DataContext>
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/ButtonStyles.xaml"/>
-                <ResourceDictionary Source="/Styles/DataGridStyles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Border Background="White"
                 CornerRadius="10"
                 Width="800"

@@ -1,18 +1,12 @@
 ﻿using MVVM_App.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Views.View;
+using Views.Model;
 using Wecare.Services.Interfaces;
-using WeCare.Data.Model;
 
 namespace Views.ViewModel.Admin
 {
-    public class AdminViewAppointmentViewModel:ViewModelBase
+     class AdminViewAppointmentViewModel:ViewModelBase
     {
         private ObservableCollection<AppointmentModel> appointmentModel;
         public ObservableCollection<AppointmentModel> AppointmentModel { get => appointmentModel; set { appointmentModel = value; OnPropertyChanged(nameof(AppointmentModel)); } }

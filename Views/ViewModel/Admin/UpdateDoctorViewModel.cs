@@ -1,0 +1,72 @@
+﻿using MVVM_App.ViewModels;
+using System.Collections.Generic;
+using System.Windows.Input;
+using System.Windows;
+using Wecare.Services.Service;
+
+namespace Views.ViewModel.Admin
+{
+    public class UpdateDoctorViewModel : ViewModelBase
+    {
+        //Fileds
+        private List<string> doctorNames;
+        private List<string> consult;
+        private string selectedDoctorName;
+        private string selectedConsultationtype;
+        public List<string> DoctorNames { get => doctorNames; set { doctorNames = value; OnPropertyChanged(nameof(DoctorNames)); } }
+
+        public List<string> Consult { get => consult; set { consult = value; OnPropertyChanged(nameof(Consult)); } }
+
+        public string SelectedDoctorName { get => selectedDoctorName; set { selectedDoctorName = value; OnPropertyChanged(nameof(SelectedDoctorName)); } }
+        public string SelectedConsultationtype { get => selectedConsultationtype; set { selectedConsultationtype = value; OnPropertyChanged(nameof(SelectedConsultationtype)); } }
+
+        //Commands
+        public ICommand UpdateDoctor { get; }
+        private readonly IDoctorService _doctorService;
+
+
+
+        //Constructor
+        public UpdateDoctorViewModel(IDoctorService doctorService)
+        {
+            _doctorService = doctorService;
+            _doctorService.GetDepartment();
+            _doctorService.GetDoctorName();
+            UpdateDoctor = new ViewModelCommand(ExecuteUpdateDoctor);
+        }
+
+        private void ExecuteUpdateDoctor(object obj)
+        {
+            if ((string.IsNullOrWhiteSpace(SelectedDoctorName) && string.IsNullOrWhiteSpace(SelectedConsultationtype)))
+            {
+                MessageBox.Show("Please Select a Valid Value", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                SelectedConsultationtype = null;
+                SelectedDoctorName = null;
+            }
+            else if (string.IsNullOrWhiteSpace(SelectedDoctorName))
+            {
+                MessageBox.Show("Doctor is required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                SelectedConsultationtype = null;
+                SelectedDoctorName = null;
+            }
+            else if ((string.IsNullOrWhiteSpace(SelectedConsultationtype)))
+            {
+                MessageBox.Show("Department is required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                SelectedConsultationtype = null;
+                SelectedDoctorName = null;
+            }
+
+            else
+            {
+                _doctorService.UpdateDoctor(SelectedDoctorName, SelectedConsultationtype);
+
+               // bool IsValid = addDocRepo.UpdateDoc(getDoctorId, getConsultantId);
+               // if (IsValid)
+               // {
+                 //   SelectedConsultationtype = null;
+                 //   SelectedDoctorName = null;
+              //}
+           }
+        }
+    }
+}

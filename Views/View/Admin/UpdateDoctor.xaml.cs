@@ -1,7 +1,5 @@
-﻿using Autofac.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,20 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Views.ViewModel.Admin;
 
 namespace Views.View.Admin
 {
     /// <summary>
-    /// Interaction logic for AdminViewAppointment.xaml
+    /// Interaction logic for UpdateDoctor.xaml
     /// </summary>
-    public partial class AdminViewAppointment : UserControl
+    public partial class UpdateDoctor : UserControl
     {
-        public AdminViewAppointment()
+        public UpdateDoctor()
         {
             InitializeComponent();
-
-          //  this.DataContext = container.Resolve<AdminViewAppointmentViewModel>();
         }
     }
 }

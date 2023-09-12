@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="Views.View.Admin.UpdateDoctor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Views.View.Admin"
+             xmlns:viewModel="clr-namespace:Views.ViewModel.Admin"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <!--<UserControl.DataContext>
+        <viewModel:UpdateDoctorViewModel/>
+    </UserControl.DataContext>-->
+    <Border Background="White" CornerRadius="10" Margin="40 100 40 40" Padding="30" VerticalAlignment="Top">
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0"  Margin="0,20" Text="Enter the Information" FontSize="24" FontWeight="Bold"/>
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left"  Margin="0,10,0,40">
+                <TextBlock x:Name="text1" Text="Select Department :" Width="200" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" />
+                <ComboBox x:Name="ConsultType" Width="250" VerticalAlignment="Center" ItemsSource="{Binding Consult}" SelectedItem="{Binding SelectedConsultationtype}"   />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="0,10">
+                <TextBlock x:Name="text2" Text="Select Doctor Name :" Width="200" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"  />
+                <ComboBox x:Name="DoctorType" Width="250" VerticalAlignment="Center" ItemsSource="{Binding DoctorNames}" SelectedItem="{Binding SelectedDoctorName}"  />
+            </StackPanel>
+
+
+            <Button x:Name="updatedoc"  Grid.Row="4" Content="Update Doctor" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="70,-30,0,-20" Padding="30 5" Width="120" Height="30" Background="CadetBlue" 
+                 FontSize="11" FontWeight="SemiBold" Foreground="White"  BorderThickness="0" Command="{Binding UpdateDoctor}">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
+        </Grid>
+
+    </Border>
+</UserControl>

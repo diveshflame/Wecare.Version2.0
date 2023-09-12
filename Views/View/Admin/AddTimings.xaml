@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Views.View.Admin"
+              xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:viewModel="clr-namespace:Views.ViewModel.Admin"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -41,7 +43,14 @@
                     <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left"  Margin="0,10">
 
                         <TextBlock x:Name="text8" Text="Registered Doctors" Width="200" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" />
-                        <ComboBox x:Name="doctorType1" Width="250" VerticalAlignment="Center"  Margin="50,0,0,0" ItemsSource="{Binding Doctor,Mode=TwoWay}" SelectedItem="{Binding SelectedDoc, Mode=TwoWay}" SelectionChanged="doctorType1_SelectionChanged" />
+                        <ComboBox x:Name="doctorType1" Width="250" VerticalAlignment="Center"  Margin="50,0,0,0" ItemsSource="{Binding Doctor,Mode=TwoWay}" SelectedItem="{Binding SelectedDoc, Mode=TwoWay}" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <cmd:EventToCommand Command="{Binding SelectionChangedCommand}"
+                                        PassEventArgsToCommand="True"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            </ComboBox>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left"  Margin="0,10">
 

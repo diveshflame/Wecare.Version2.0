@@ -11,4 +11,9 @@
     <Folder Include="Styles\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Wecare.Data\Wecare.Data.csproj" />
+    <ProjectReference Include="..\Wecare.Services\Wecare.Services.csproj" />
+  </ItemGroup>
+
 </Project>

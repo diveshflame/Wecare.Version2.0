@@ -1,7 +1,9 @@
 using Autofac.Core;
+using Wecare.Data.Data.User_Authentication;
 using WeCare.Data.Data.Appointment;
 using WeCare.Data.Data.Doctor;
 using WeCare.Data.DataAccess;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ISqldataAccess, SqldataAccess>();
 builder.Services.AddScoped<IDoctorData, DoctorData>();
 builder.Services.AddScoped<IViewAppointmentData, ViewAppointmentData>();
+builder.Services.AddScoped<IUserAuthenticationData, UserAuthenticationData>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -14,6 +14,9 @@ using Wecare.Services.Service;
 using Views.ViewModel.Admin;
 using static Views.View.AddDoctor;
 using Microsoft.OpenApi.Writers;
+using Views.View.Common;
+using Wecare.Services.Interfaces;
+using Wecare.Services.Service;
 
 namespace Views
 {
@@ -22,6 +25,16 @@ namespace Views
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            IUserAuthenticationService userAuthService = new UserAuthenticationService();
+
+            var window = new RegistrationPage(userAuthService);
+
+            window.Show();
+        }
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

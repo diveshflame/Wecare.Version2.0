@@ -7,6 +7,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Views.View.Common;
+using Wecare.Services.Interfaces;
+using Wecare.Services.Service;
 using System.Windows.Documents;
 using Wecare.Services.Service;
 using Wecare.Services.Interfaces;
@@ -53,5 +56,15 @@ namespace Views
 
 
             }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            IUserAuthenticationService userAuthService = new UserAuthenticationService();
+
+            var window = new RegistrationPage(userAuthService);
+
+            window.Show();
+        }
     }
 }

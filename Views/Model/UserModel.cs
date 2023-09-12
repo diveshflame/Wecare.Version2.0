@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Views.Styles
+namespace Views.Model
 {
-    class Class1
+    class UserModel
     {
     }
 }

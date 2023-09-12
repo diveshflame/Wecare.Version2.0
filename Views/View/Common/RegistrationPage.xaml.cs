@@ -34,7 +34,7 @@ namespace Views.View.Common
             userAuthenticationService = userAuthService;
             var registrationViewModel = new RegistrationViewModel(userAuthenticationService);
 
-            DataContext = registrationViewModel();
+            //DataContext = registrationViewModel();
         }
 
         private void MaskButton_Click(object sender, RoutedEventArgs e)

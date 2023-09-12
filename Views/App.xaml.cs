@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Views.View.Common;
+using Wecare.Services.Interfaces;
+using Wecare.Services.Service;
 
 namespace Views
 {
@@ -18,7 +20,10 @@ namespace Views
         {
             base.OnStartup(e);
 
-            var window = new RegistrationPage();
+            IUserAuthenticationService userAuthService = new UserAuthenticationService();
+
+            var window = new RegistrationPage(userAuthService);
+
             window.Show();
         }
     }

@@ -16,6 +16,12 @@ namespace Views.ViewModel.Admin
     public class AddDoctorViewModel : ViewModelBase, IAddDoctorViewModel
     {
         private string _department;
+        private IDoctorService DocService;
+        private string selectedDepartment;
+        private string DocName;
+        public ICommand AddDoctor { get; }
+
+
         public string Department
         {
             get { return _department; }
@@ -27,11 +33,9 @@ namespace Views.ViewModel.Admin
 
             }
         }
-        private IDoctorService DocService;
+       
 
-        public ICommand AddDoctor { get; }
-
-        private string selectedDepartment;
+     
         public string SelectedDepartment
         {
             get => selectedDepartment;
@@ -42,7 +46,7 @@ namespace Views.ViewModel.Admin
             }
         }
 
-        private string DocName;
+     
         public string DocNameChange
         {
             get { return DocName; }

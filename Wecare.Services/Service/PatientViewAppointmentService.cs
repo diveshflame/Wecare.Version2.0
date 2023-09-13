@@ -13,7 +13,7 @@ namespace Wecare.Services.Service
             _patientViewAppointmentData = patientViewAppointmentData;
         }
 
-
+        //patient view booking
         #region Patient View Bookings
         public Task<IEnumerable<AppointmentModel>> GetPatientAllApointments() => _patientViewAppointmentData.GetPatientAllApointments();
         public Task<IEnumerable<AppointmentModel>> GetPatientTodayAppointment() => _patientViewAppointmentData.GetPatientTodayAppointment();

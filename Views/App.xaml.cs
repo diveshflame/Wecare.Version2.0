@@ -29,40 +29,7 @@ namespace Views
     /// </summary>
     public partial class App : Application
     {
-      protected override void OnStartup(StartupEventArgs e)
-
-        {
-
-            base.OnStartup(e);
-
-            var builder = new ContainerBuilder();
-
-            builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
-
-
-            builder.RegisterType<ViewAppointmentService>().As<IViewAppointmentService>().SingleInstance();
-
-            //builder.RegisterType<TestWindow>().AsSelf();
-
-
-            IContainer container = builder.Build();
-            AdminViewAppointmentViewModel adminViewAppointmentViewModel = container.Resolve<AdminViewAppointmentViewModel>();
-           
-
-                //using (var scope = container.BeginLifetimeScope())
-
-                //{
-
-                //    /* AddDoctorViewModel viewModel = container.Resolve<AddDoctorViewModel>();*/
-
-                //    //var window = scope.Resolve<TestWindow>();
-
-                //    window.Show();
-
-                //}
-
-
-            }
+     
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

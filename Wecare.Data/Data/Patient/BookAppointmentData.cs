@@ -32,7 +32,7 @@ namespace WeCare.Data.Data
             return result.FirstOrDefault();
 
         }
-        //arjun
+       
 
         public async Task<AppointmentModel?> GetDoctorAvailableTime(string doc, DateTime selectedDate)
         {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
-using Wecare.Data.Data.Common;
+using Wecare.Data.Data.Interface;
 
 namespace WeCare.Data.Data.Doctor
 {

@@ -1,6 +1,6 @@
 ﻿using WeCare.Data.Model;
 
-namespace Wecare.Data.Data.Common
+namespace Wecare.Data.Data.Interface
 {
     public interface ICommonFunctions
     {

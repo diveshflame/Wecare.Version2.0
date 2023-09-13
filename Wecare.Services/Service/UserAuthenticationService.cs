@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wecare.Services.Interfaces;
+﻿using Wecare.Services.Interfaces;
 using WeCare.Data.Model;
 
 namespace Wecare.Services.Service

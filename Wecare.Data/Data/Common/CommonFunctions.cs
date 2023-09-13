@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wecare.Data.Data.Interface;
 using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
 

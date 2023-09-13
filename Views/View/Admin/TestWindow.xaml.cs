@@ -1,7 +1,5 @@
-﻿using Autofac.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,22 +10,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Autofac.Features.ResolveAnything;
+using Autofac;
 using Views.ViewModel.Admin;
 
 namespace Views.View.Admin
 {
     /// <summary>
-    /// Interaction logic for AdminViewAppointment.xaml
+    /// Interaction logic for TestWindow.xaml
     /// </summary>
-    public partial class AdminViewAppointment : UserControl
+    public partial class TestWindow : Window
     {
-        public AdminViewAppointment()
+        public TestWindow()
         {
             InitializeComponent();
-
-          //  this.DataContext = container.Resolve<AdminViewAppointmentViewModel>();
+         
         }
     }
 }

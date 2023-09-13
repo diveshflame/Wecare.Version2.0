@@ -15,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ISqldataAccess, SqldataAccess>();
 builder.Services.AddScoped<IDoctorData, DoctorData>();
-builder.Services.AddScoped<IViewAppointmentData, ViewAppointmentData>();
+builder.Services.AddScoped<IViewAppointmentData, PatientViewAppointmentData>();
 builder.Services.AddScoped<IUserAuthenticationData, UserAuthenticationData>();
 var app = builder.Build();
 

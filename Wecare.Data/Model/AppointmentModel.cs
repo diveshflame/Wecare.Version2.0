@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace WeCare.Data.Model
 {
     public class AppointmentModel
@@ -14,7 +9,7 @@ namespace WeCare.Data.Model
         public int Department_Id { get; set; }
         public DateTime Appointment_StartTime { get; set;}
         public DateTime Appointment_EndTime { get; set; }
-        public DateTime Deleted_TimeStamp { get; set; }
+        public DateTime?  Deleted_TimeStamp { get; set; }
         public string Name { get; set; }
         public string Doctor_Name { get; set; }
         public string Department_Name { get;set; }

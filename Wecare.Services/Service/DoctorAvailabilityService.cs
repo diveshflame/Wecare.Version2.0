@@ -17,10 +17,14 @@ namespace Wecare.Services.Service
             _doctorAvailabilityData = doctorAvailabilityData;
         }
 
-        public async Task<IEnumerable<string>> GetDoctorNames()
+        public async Task<string?> GetDoctorNames()
         {
-            return await _doctorAvailabilityData.GetDoctorNames();
+            var DoctorNames = await _doctorAvailabilityData.GetDoctorNames();
+            return DoctorNames.FirstOrDefault().ToString();
         }
+
+
+
 
         public async Task<IEnumerable<string>> GetStartTimes()
         {
@@ -32,10 +36,14 @@ namespace Wecare.Services.Service
             return await _doctorAvailabilityData.GetEndTimes();
         }
 
-        public async Task<IEnumerable<string>> GetConsultantDescriptions(string doctorName)
+
+        public async Task<string?> GetDepartmentDescriptions(string doctorName)
         {
-            return await _doctorAvailabilityData.GetConsultantDescriptions(doctorName);
+            var DepartmentNames = await _doctorAvailabilityData.GetConsultantDescriptions(doctorName);
+            return DepartmentNames.FirstOrDefault().ToString();
         }
+
+
 
         public async Task<int> CheckDoctorAvailability(DateTime selectedDateTime, string doctorName, DateTime startDate, DateTime endDate)
         {
@@ -54,3 +62,4 @@ namespace Wecare.Services.Service
 
     }
 }
+

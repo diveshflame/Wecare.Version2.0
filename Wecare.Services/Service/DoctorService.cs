@@ -21,10 +21,11 @@ namespace Wecare.Services.Service
             functions = _functions;
 
         }
-        public async Task<DepartmentModel?> GetDepartment()
+        public async Task<string?> GetDepartment()
         {
             var Department = await functions.GetDepartmentName();
-            return Department.FirstOrDefault();
+            return Department.FirstOrDefault().ToString();
+
         }
         public async Task AddDoctor(string text, string selectedDepartment)
         {
@@ -33,7 +34,7 @@ namespace Wecare.Services.Service
         }
 
         #region Display the values in view
-        public Task<IEnumerable<DepartmentModel>> GetDepartmentName()=> functions.GetDepartmentName();
+        public Task<IEnumerable<DepartmentModel>> GetDepartmentName() => functions.GetDepartmentName();
         public Task<IEnumerable<DoctorModel>> GetDoctorName() => functions.GetDoctorName();
         #endregion
 

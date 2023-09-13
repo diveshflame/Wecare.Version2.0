@@ -20,13 +20,7 @@ namespace WeCare.Data.Data
 
 
         }
-        private readonly string getDepartmentQuery = "SELECT Department_name from department";
-        private readonly string getDepartmentIdQuery = "SELECT Department_Id from department where @department_name";
-        private readonly string getDocId = "SELECT doctor_Id from doctor where @doctor_name=Doctor_Name";
 
-        public Task<IEnumerable<DepartmentModel>> GetDepartmentId(string departmentName) => dbAccess.LoadData<DepartmentModel, dynamic>(getDepartmentIdQuery, new { department_name = departmentName });
-        public Task<IEnumerable<DoctorModel>> GetDoctorId(string doctorName) => dbAccess.LoadData<DoctorModel, dynamic>(getDocId, new { doctor_name = doctorName });
-        public Task<IEnumerable<DepartmentModel>> GetDepartmentName() => dbAccess.LoadData<DepartmentModel, dynamic>(getDepartmentQuery, new { });
         public async Task<DoctorModel?> GetDoctorNames(string SelectedDepartment)
         {
 
@@ -38,7 +32,7 @@ namespace WeCare.Data.Data
             return result.FirstOrDefault();
 
         }
-        //arjun
+       
 
         public async Task<AppointmentModel?> GetDoctorAvailableTime(string doc, DateTime selectedDate)
         {

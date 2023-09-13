@@ -45,15 +45,13 @@ namespace Views.ViewModel.Common
         }
 
         public ICommand RegisterCommand { get; set; }
-        private IUserAuthenticationService _userAuthenticationService;
+        private IUserAuthenticationService userAuthService;
 
-
-        public RegistrationViewModel(IUserAuthenticationService userAuthenticationService)
+        public RegistrationViewModel(IUserAuthenticationService userAuthService)
         {
+            this.userAuthService = userAuthService;
             UserDetails = new UserDetails();
-            Genders = new List<string> { "Male", "Female", "Other" };
-
-            _userAuthenticationService = userAuthenticationService;
+            Genders = new List<string> { "Male", "Female", "Other" }; //To Be Changed
 
             RegisterCommand = new ViewModelCommand(Register, CanRegister);
         }
@@ -70,11 +68,9 @@ namespace Views.ViewModel.Common
                 Phone_Number = UserDetails.PhoneNumber,
                 Password = UserDetails.Password,
             };
-
             try
             {
-                // Register method from the user authentication service
-                await _userAuthenticationService.Register(userModel);
+                await userAuthService.Register(userModel);
             }
             catch (Exception ex)
             {

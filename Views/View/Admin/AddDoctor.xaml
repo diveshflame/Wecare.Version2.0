@@ -4,9 +4,82 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Views.View"
+             xmlns:viewModel="clr-namespace:Views.ViewModel.Admin"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
-</UserControl>
+    
+        <UserControl.DataContext>
+            <viewModel:AddDoctorViewModel/>
+        </UserControl.DataContext>
+        <Grid>
+
+
+            <!-- Main Content -->
+
+            <Border Background="White" CornerRadius="10" Margin="55,60,70,0" Padding="30"  VerticalAlignment="Top">
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="1"  Margin="0,3,-38,18" Text="Enter the Details" FontSize="24" FontWeight="Bold" Grid.ColumnSpan="2"/>
+
+
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left"  Margin="0,10,0,20">
+
+                        <TextBlock x:Name="text1" HorizontalAlignment="Left" Text="Select Department" Width="200" VerticalAlignment="Center" FontSize="15" FontWeight="Bold" />
+                        <ComboBox x:Name="ConsultType" Width="250" VerticalAlignment="Center" ItemsSource="{Binding Department}" SelectedItem="{Binding SelectedDepartment}"  ></ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="0,10">
+                        <TextBlock x:Name="text2" Text="Enter the Name" Width="200" VerticalAlignment="Center" FontSize="15" FontWeight="Bold"  />
+                        <TextBox x:Name="Doctor" Width="250" VerticalAlignment="Center" Text="{Binding DocNameChange}"/>
+                    </StackPanel>
+
+
+                    <StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal"  HorizontalAlignment="Right" Margin="80,0,0,0">
+                        <Button x:Name="btn1" Content="Add Doctor"  Width="90"
+                            Height="25" Background="CadetBlue" Foreground="White" FontSize="14"
+                            FontWeight="SemiBold" BorderThickness="0" Command="{Binding AddDoctor}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="5">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <!--<Button x:Name="btn3"  Grid.Row="4" Content="Update Time" HorizontalAlignment="Right"
+                            VerticalAlignment="Top" Margin="10,0,0,0" Padding="15 5" Width="70"
+                            Height="25" Background="CadetBlue" Foreground="White" FontSize="11"
+                            FontWeight="SemiBold" BorderThickness="0"  Grid.RowSpan="4" Grid.ColumnSpan="4">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="5">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>-->
+
+                    </StackPanel>
+
+                </Grid>
+
+            </Border>
+ </Grid>
+    </UserControl>

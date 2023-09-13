@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows;
 using Wecare.Services.Service;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace Views.ViewModel.Admin
 {
@@ -35,38 +37,11 @@ namespace Views.ViewModel.Admin
             UpdateDoctor = new ViewModelCommand(ExecuteUpdateDoctor);
         }
 
+        
+        
         private void ExecuteUpdateDoctor(object obj)
         {
-            if ((string.IsNullOrWhiteSpace(SelectedDoctorName) && string.IsNullOrWhiteSpace(SelectedConsultationtype)))
-            {
-                MessageBox.Show("Please Select a Valid Value", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                SelectedConsultationtype = null;
-                SelectedDoctorName = null;
-            }
-            else if (string.IsNullOrWhiteSpace(SelectedDoctorName))
-            {
-                MessageBox.Show("Doctor is required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                SelectedConsultationtype = null;
-                SelectedDoctorName = null;
-            }
-            else if ((string.IsNullOrWhiteSpace(SelectedConsultationtype)))
-            {
-                MessageBox.Show("Department is required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                SelectedConsultationtype = null;
-                SelectedDoctorName = null;
-            }
-
-            else
-            {
-                _doctorService.UpdateDoctor(SelectedDoctorName, SelectedConsultationtype);
-
-               // bool IsValid = addDocRepo.UpdateDoc(getDoctorId, getConsultantId);
-               // if (IsValid)
-               // {
-                 //   SelectedConsultationtype = null;
-                 //   SelectedDoctorName = null;
-              //}
-           }
+            _doctorService.UpdateDoctor(SelectedDoctorName, SelectedConsultationtype);
         }
     }
 }

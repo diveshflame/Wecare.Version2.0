@@ -8,6 +8,6 @@ namespace Wecare.Services.Interfaces
         Task<string?> GetDepartment();
         Task<IEnumerable<DepartmentModel>> GetDepartmentName();
         Task<IEnumerable<DoctorModel>> GetDoctorName();
-        Task<bool> UpdateDoctor(string selectedDocName, string selectedDepartName);
+        Task UpdateDoctor(string selectedDocName, string selectedDepartName);
     }
 }

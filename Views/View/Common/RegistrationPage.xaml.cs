@@ -27,14 +27,9 @@ namespace Views.View.Common
         private bool isMasked = false;
         private string originalText;
 
-        private IUserAuthenticationService userAuthenticationService;
-        public RegistrationPage(IUserAuthenticationService userAuthService)
+        public RegistrationPage()
         {
             InitializeComponent();
-            userAuthenticationService = userAuthService;
-            var registrationViewModel = new RegistrationViewModel(userAuthenticationService);
-
-            //DataContext = registrationViewModel();
         }
 
         private void MaskButton_Click(object sender, RoutedEventArgs e)

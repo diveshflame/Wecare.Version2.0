@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Wecare.Data.Data.Common;
 using Wecare.Services.Interfaces;
-using WeCare.Data.Data;
 using WeCare.Data.Data.Doctor;
 using WeCare.Data.Model;
 
@@ -21,6 +16,7 @@ namespace Wecare.Services.Service
             functions = _functions;
 
         }
+        #region Get the departments
         public async Task<string?> GetDepartment()
         {
             var Department = await functions.GetDepartmentName();
@@ -32,13 +28,11 @@ namespace Wecare.Services.Service
             await dbAccess.AddDoctor(text, selectedDepartment);
             string message = "Succesfully Inserted";
         }
-
+        #endregion
         #region Display the values in view
         public Task<IEnumerable<DepartmentModel>> GetDepartmentName() => functions.GetDepartmentName();
         public Task<IEnumerable<DoctorModel>> GetDoctorName() => functions.GetDoctorName();
         #endregion
-
-
         #region Update Doctor
         public async Task UpdateDoctor(string selectedDocName, string selectedDepartName)
         {

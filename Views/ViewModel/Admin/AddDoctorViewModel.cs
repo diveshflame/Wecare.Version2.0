@@ -1,15 +1,9 @@
 ﻿using MVVM_App.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Views.View;
-using WeCare.Data.Data.Doctor;
 using Wecare.Services.Interfaces;
 using static System.Net.Mime.MediaTypeNames;
-using WeCare.Data.DataAccess;
+
 
 namespace Views.ViewModel.Admin
 {
@@ -21,7 +15,7 @@ namespace Views.ViewModel.Admin
         private string DocName;
         public ICommand AddDoctor { get; }
 
-
+        #region Adding OnpropertyChanged
         public string Department
         {
             get { return _department; }
@@ -60,7 +54,7 @@ namespace Views.ViewModel.Admin
             }
 
         }
-
+        #endregion
 
         private async Task LoadDepartment(IDoctorService doctorService)
         {
@@ -75,6 +69,7 @@ namespace Views.ViewModel.Admin
                
             }
         }
+
         public AddDoctorViewModel(IDoctorService doctorService)
         {
             DocService= doctorService;

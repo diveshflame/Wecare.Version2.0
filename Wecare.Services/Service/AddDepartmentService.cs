@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Wecare.Data.Data.Admin;
-using WeCare.Data.DataAccess;
-using WeCare.Data.Model;
+using Wecare.Services.Interfaces;
 
-namespace Wecare.Services.Service 
+namespace Wecare.Services.Service
 {
-    public class AddDepartmentService 
+    public class AddDepartmentService : IAddDepartmentService
     {
-        public Task AddDepartment(string Department)
+        public async Task AddDepartment(string Department)
         {
-            
+            await _departmentData.AddDepartment(Department);
         }
         private readonly IDepartmentData _departmentData;
         public AddDepartmentService(IDepartmentData departmentData)
         {
-            departmentData = _dbAccess;
+            departmentData = _departmentData;
 
         }
 

@@ -1,10 +1,6 @@
 ﻿using MVVM_App.ViewModels;
 using System.Collections.Generic;
 using System.Windows.Input;
-using System.Windows;
-using Wecare.Services.Service;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
 namespace Views.ViewModel.Admin
 {
@@ -24,7 +20,7 @@ namespace Views.ViewModel.Admin
 
         //Commands
         public ICommand UpdateDoctor { get; }
-        private readonly IDoctorService _doctorService;
+   /*     private readonly IDoctorService _doctorService;
 
 
 
@@ -36,12 +32,12 @@ namespace Views.ViewModel.Admin
             _doctorService.GetDoctorName();
             UpdateDoctor = new ViewModelCommand(ExecuteUpdateDoctor);
         }
-
+*/
         
         
-        private void ExecuteUpdateDoctor(object obj)
+       /* private void ExecuteUpdateDoctor(object obj)
         {
             _doctorService.UpdateDoctor(SelectedDoctorName, SelectedConsultationtype);
-        }
+        }*/
     }
 }

@@ -1,9 +1,4 @@
 ﻿using MVVM_App.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Views.ViewModel.Admin
@@ -32,9 +27,7 @@ namespace Views.ViewModel.Admin
 
         private void ExecuteAddDepartment(object obj)
         {
-         
-               
-            
+        
         }
     }
 }

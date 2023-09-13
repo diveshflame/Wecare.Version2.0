@@ -5,6 +5,7 @@ using System.Windows;
 using Wecare.Services.Service;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Wecare.Services.Interfaces;
 
 namespace Views.ViewModel.Admin
 {

@@ -3,7 +3,7 @@
     public interface IDoctorAvailabilityService
     {
         Task<int> CheckDoctorAvailability(DateTime selectedDateTime, string doctorName, DateTime startDate, DateTime endDate);
-        Task<IEnumerable<string>> GetConsultantDescriptions(string doctorName);
+        Task<string?> GetDepartmentDescriptions(string doctorName);
         Task<string?> GetDoctorNames();
         Task<IEnumerable<string>> GetEndTimes();
         Task<IEnumerable<string>> GetStartTimes();

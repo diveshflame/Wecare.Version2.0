@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wecare.Services.Service;
+using Wecare.Services.Interfaces;
 using WeCare.Data.Data.Doctor;
 
-namespace Wecare.Services.Interfaces
+namespace Wecare.Services.Service
 {
     public class DoctorAvailabilityService : IDoctorAvailabilityService
     {
@@ -36,7 +36,7 @@ namespace Wecare.Services.Interfaces
             return await _doctorAvailabilityData.GetEndTimes();
         }
 
-        
+
         public async Task<string?> GetDepartmentDescriptions(string doctorName)
         {
             var DepartmentNames = await _doctorAvailabilityData.GetConsultantDescriptions(doctorName);
@@ -61,5 +61,5 @@ namespace Wecare.Services.Interfaces
         }
 
     }
-    }
+}
 

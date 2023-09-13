@@ -1,6 +1,6 @@
 ﻿using WeCare.Data.Model;
 
-namespace WeCare.Data.Data
+namespace Wecare.Data.Data.Interface
 {
     public interface IBookAppointmentData
     {

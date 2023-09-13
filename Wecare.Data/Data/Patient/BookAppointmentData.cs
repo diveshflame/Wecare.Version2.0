@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
 using Autofac;
-
+using Wecare.Data.Data.Interface;
 
 namespace WeCare.Data.Data
 {

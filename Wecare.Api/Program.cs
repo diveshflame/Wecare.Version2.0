@@ -1,4 +1,5 @@
 using Autofac.Core;
+using Wecare.Data.Data.Interface;
 using Wecare.Data.Data.User_Authentication;
 using WeCare.Data.Data.Appointment;
 using WeCare.Data.Data.Doctor;

@@ -30,6 +30,9 @@
     <SolidColorBrush x:Key="plainTextColor1" Color="#9497CD"/>
     <SolidColorBrush x:Key="plainTextColor2" Color="#7C80C2"/>
     <SolidColorBrush x:Key="plainTextColor3" Color="#7376BD"/>
+    <SolidColorBrush x:Key="plainTextColor4" Color="Black"/>
+    
+    
 
     <!--Panel Colors-->
     <SolidColorBrush x:Key="panelColor" Color="white"/>

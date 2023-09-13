@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wecare.Data.Data.Interface;
 using Wecare.Services.Interfaces;
-using WeCare.Data.Data;
 using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
 

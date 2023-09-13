@@ -1,6 +1,6 @@
 ﻿using WeCare.Data.Model;
 
-namespace Wecare.Data.Data.User_Authentication
+namespace Wecare.Data.Data.Interface
 {
     public interface IUserAuthenticationData
     {

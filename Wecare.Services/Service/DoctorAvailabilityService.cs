@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wecare.Services.Interfaces;
-using WeCare.Data.Data.Doctor;
+﻿using Wecare.Services.Interfaces;
 
 namespace Wecare.Services.Service
 {
@@ -19,13 +13,9 @@ namespace Wecare.Services.Service
 
         public async Task<string?> GetDoctorNames()
         {
-            var DoctorNames = await _doctorAvailabilityData.GetDoctorNames();
-            return DoctorNames.FirstOrDefault().ToString();
+            var doctorNames = await _doctorAvailabilityData.GetDoctorNames();
+            return doctorNames.FirstOrDefault().ToString();
         }
-
-
-
-
         public async Task<IEnumerable<string>> GetStartTimes()
         {
             return await _doctorAvailabilityData.GetStartTimes();
@@ -36,14 +26,11 @@ namespace Wecare.Services.Service
             return await _doctorAvailabilityData.GetEndTimes();
         }
 
-
         public async Task<string?> GetDepartmentDescriptions(string doctorName)
         {
-            var DepartmentNames = await _doctorAvailabilityData.GetConsultantDescriptions(doctorName);
-            return DepartmentNames.FirstOrDefault().ToString();
+            var departmentNames = await _doctorAvailabilityData.GetDepartmentDescriptions(doctorName);
+            return departmentNames.FirstOrDefault().ToString();
         }
-
-
 
         public async Task<int> CheckDoctorAvailability(DateTime selectedDateTime, string doctorName, DateTime startDate, DateTime endDate)
         {
@@ -59,7 +46,6 @@ namespace Wecare.Services.Service
         {
             await _doctorAvailabilityData.InsertMultipleAvailabilities(doctorId, currentDate);
         }
-
     }
 }
 

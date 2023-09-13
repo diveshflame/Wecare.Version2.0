@@ -1,5 +1,4 @@
-﻿
-namespace WeCare.Data.Model
+﻿namespace WeCare.Data.Model
 {
     public class DoctorAvailabilityModel
     {

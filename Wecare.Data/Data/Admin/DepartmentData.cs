@@ -5,30 +5,34 @@ namespace Wecare.Data.Data.Admin
 {
     public class DepartmentData : IDepartmentData
     {
-        private readonly ISqldataAccess dbAccess;
-        public DepartmentData(ISqldataAccess _dbAccess)
+        private readonly ISqldataAccess _dbAccess;
+        public DepartmentData(ISqldataAccess dbAccess)
         {
-            dbAccess = _dbAccess;
+            _dbAccess = dbAccess;
 
         }
-
-        public async Task<DepartmentModel?> CheckDepartment(string Department)
+        #region Checking Department
+        public async Task<DepartmentModel?> CheckDepartment(string department)
         {
             string count = "Select COUNT(*) from department where deparmtent_Desc =@_department";
-            var DepartmentCount = await dbAccess.LoadData<DepartmentModel, dynamic>(count, new { _department = Department });
-            return DepartmentCount.FirstOrDefault();
+            var departmentCount = await _dbAccess.LoadData<DepartmentModel, dynamic>(count, new { _department = department });
+            return departmentCount.FirstOrDefault();
         }
-        public async Task AddDepartment(string Department)
+        #endregion
+        #region AddDepartment
+        public async Task AddDepartment(string department)
         {
-            if (Convert.ToInt32(CheckDepartment(Department).ToString()) > 0)
+            string departmentStatus;
+            if (Convert.ToInt32(CheckDepartment(department).ToString()) > 0)
             {
-
+                departmentStatus = "Already Exists";
             }
             else
             {
-                string InsertDep = "Insert into department(department_name) values(@_department)";
-                await dbAccess.SaveData(InsertDep, new { _department = Department });
+                string insertDepartment = "Insert into department(department_name) values(@_department)";
+                await _dbAccess.SaveData(insertDepartment, new { _department = department });
             }
         }
+        #endregion
     }
 }

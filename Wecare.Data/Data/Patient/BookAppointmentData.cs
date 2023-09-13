@@ -13,10 +13,10 @@ namespace WeCare.Data.Data
 {
     public class BookAppointmentData : IBookAppointmentData
     {
-        private readonly ISqldataAccess dbAccess;
-        public BookAppointmentData(ISqldataAccess _dbAccess)
+        private readonly ISqldataAccess _dbAccess;
+        public BookAppointmentData(ISqldataAccess dbAccess)
         {
-            dbAccess = _dbAccess;
+            _dbAccess = dbAccess;
 
 
         }
@@ -27,7 +27,7 @@ namespace WeCare.Data.Data
             string GetDoc = @"SELECT d.Doctor_name FROM doctor d 
                               JOIN department dp ON d.DEPARTMENT_ID = dp.Department_Id
                               WHERE dp.Department_Name = @SelectedDepartmentParameter;";
-            var result = await dbAccess.LoadData<DoctorModel, dynamic>(GetDoc, new { SelectedDepartmentParameter = SelectedDepartment });
+            var result = await _dbAccess.LoadData<DoctorModel, dynamic>(GetDoc, new { SelectedDepartmentParameter = SelectedDepartment });
 
             return result.FirstOrDefault();
 
@@ -59,7 +59,7 @@ namespace WeCare.Data.Data
                                 AND bt.Deleted_TimeStamp IS NULL
                                 ORDER BY available_starttime, available_endtime;
                                 ";
-            var results = await dbAccess.LoadData<AppointmentModel, dynamic>(GetTime, new { doctorName = doc, time = selectedDate });
+            var results = await _dbAccess.LoadData<AppointmentModel, dynamic>(GetTime, new { doctorName = doc, time = selectedDate });
             return results.FirstOrDefault();
         }
         public async Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc)
@@ -76,7 +76,7 @@ namespace WeCare.Data.Data
                                         ";
 
 
-            var results2 = await dbAccess.LoadData<AppointmentModel, dynamic>(GetDepartmentID, new { docSelected = doc, depSelected = selectedDep });//add userid
+            var results2 = await _dbAccess.LoadData<AppointmentModel, dynamic>(GetDepartmentID, new { docSelected = doc, depSelected = selectedDep });//add userid
 
             return results2.FirstOrDefault();
 
@@ -84,7 +84,7 @@ namespace WeCare.Data.Data
         public async Task<AppointmentModel?> GetUserID()
         {
             string userID = "SELECT userid from userdetails where active_session = 1";
-            var results2 = await dbAccess.LoadData<AppointmentModel, dynamic>(userID, new { });//add userid
+            var results2 = await _dbAccess.LoadData<AppointmentModel, dynamic>(userID, new { });//add userid
             return results2.FirstOrDefault();
         }
         public async Task InsertAppointment(int UserID, string DeptID, DateTime selectedDate, string doc, DateTime StartTime, DateTime EndTime)
@@ -101,7 +101,7 @@ namespace WeCare.Data.Data
                 EndSlot = EndTime
             };
 
-            await dbAccess.SaveData(insertStatement, parameters);
+            await _dbAccess.SaveData(insertStatement, parameters);
         }
     }
 }

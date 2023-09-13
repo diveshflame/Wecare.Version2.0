@@ -15,13 +15,7 @@ using Views.ViewModel.Admin;
 using static Views.View.AddDoctor;
 using Microsoft.OpenApi.Writers;
 using Views.View.Common;
-using Wecare.Services.Interfaces;
-using Wecare.Services.Service;
 using System.Windows.Documents;
-using Wecare.Services.Service;
-using Wecare.Services.Interfaces;
-using Views.ViewModel.Admin;
-using Autofac;
 using Views.ViewModel.Common;
 
 namespace Views
@@ -31,7 +25,6 @@ namespace Views
     /// </summary>
     public partial class App : Application
     {
-        private IContainer container;
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -48,21 +41,19 @@ namespace Views
                var window=scope.Resolve<TestWindow>();   
                 window.Show();  
             }
-        
-        }
-            
 
+
+            //Divesh Autofac Register
             // Register services and view models
             builder.RegisterType<UserAuthenticationService>().As<IUserAuthenticationService>();
             builder.RegisterType<RegistrationViewModel>();
-
-            container = builder.Build();
 
             // Resolving the main window and setting its DataContext
             var mainWindow = new RegistrationPage();
             var registrationViewModel = container.Resolve<RegistrationViewModel>();
             mainWindow.DataContext = registrationViewModel;
             mainWindow.Show();
-        }
+
+        }                           
     }
 }

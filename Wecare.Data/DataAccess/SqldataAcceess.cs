@@ -2,6 +2,7 @@
 using Npgsql;
 using Dapper;
 using System.Data;
+using Wecare.Data.Data.Interface;
 
 namespace WeCare.Data.DataAccess
 {

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeCare.Data.DataAccess;
-using Npgsql;
-using System.Data;
+﻿using System.Data;
+using Wecare.Data.Data.Interface;
 
 namespace WeCare.Data.Data.Doctor
 {
-    public class DoctorAvailabilityData : IDoctorAvailabilityData
+    public class DoctorAvailabilityData
     {
         private readonly ISqldataAccess _db;
 
@@ -59,7 +53,7 @@ namespace WeCare.Data.Data.Doctor
 
             try
             {
-                var parameters = new { }; 
+                var parameters = new { };
 
                 var endTimes = await _db.LoadData<TimeSpan, dynamic>(sqlCommand, parameters);
 
@@ -123,7 +117,7 @@ namespace WeCare.Data.Data.Doctor
             string query = "SELECT COUNT(*) FROM doctor_availability WHERE TO_CHAR(available_starttime, 'YYYY-MM-DD HH24:MI:SS') = @SelectedDateTime AND doctor_id = @doctorId";
             var parameters = new { SelectedDateTime = dat1.ToString("yyyy-MM-dd HH:mm:ss"), doctorId };
 
-            return (await _db.LoadData<int, dynamic>(query,parameters)).FirstOrDefault();
+            return (await _db.LoadData<int, dynamic>(query, parameters)).FirstOrDefault();
 
         }
         //--------------------------------------------------------------------------------------------------
@@ -137,13 +131,13 @@ namespace WeCare.Data.Data.Doctor
 
         public async Task InsertMultipleAvailabilities(int doctorId, DateTime currentDate)
         {
-                string insert = "INSERT INTO doctor_availability (doctor_id,available_starttime,available_endtime) VALUES (@doctorid,@starttime,@endtime)";
+            string insert = "INSERT INTO doctor_availability (doctor_id,available_starttime,available_endtime) VALUES (@doctorid,@starttime,@endtime)";
 
-                var parameters = new
-                {
-                    //The parameters should be called from Services
-                };
-                await _db.SaveData(insert, parameters);         
+            var parameters = new
+            {
+                //The parameters should be called from Services
+            };
+            await _db.SaveData(insert, parameters);
         }
     }
 }

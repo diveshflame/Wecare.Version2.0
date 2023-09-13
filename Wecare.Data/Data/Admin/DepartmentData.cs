@@ -1,4 +1,4 @@
-﻿using WeCare.Data.DataAccess;
+﻿using Wecare.Data.Data.Interface;
 using WeCare.Data.Model;
 
 namespace Wecare.Data.Data.Admin

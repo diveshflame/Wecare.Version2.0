@@ -39,24 +39,23 @@ namespace Wecare.Services.Service
 
 
         #region Update Doctor
-        public async Task<bool> UpdateDoctor(string selectedDocName, string selectedDepartName)
+        public async Task UpdateDoctor(string selectedDocName, string selectedDepartName)
         {
-          
            var getDoctorId= await functions.GetDoctorId(selectedDocName);
            var getDepartmentId= await functions.GetDepartmentID(selectedDepartName);
-            var count= await dbAccess.CheckDocAvailability(getDoctorId.Doctor_Id);
-            //count.FirstOrDefault();
-            bool valid = false;
+           var count= await dbAccess.CheckDocAvailability(getDoctorId.Doctor_Id);
             if(count==null)
             {
-                return !valid;
+                string message = "You Cannot update!!!!The doctor is already booked";
             }
             else
             {
                 await dbAccess.UpdateDoc(getDoctorId.Doctor_Id, getDepartmentId.Department_Id);
+                string message2 = "Successfully Updated";
             }
-            return valid;
         }
         #endregion
+
+
     }
 }

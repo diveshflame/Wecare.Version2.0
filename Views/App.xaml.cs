@@ -1,11 +1,20 @@
-﻿using Autofac.Features.ResolveAnything;
+﻿
 using Autofac;
 using System.Windows;
-using Views.View.Admin;
+
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using Views.ViewModel.Admin;
 using Wecare.Services.Interfaces;
 using Wecare.Services.Service;
-using Views.View.Common;
+using Views.View.Admin;
 using Views.ViewModel.Common;
+using Wecare.Data.Data.Common;
+using WeCare.Data.Data.Doctor;
+using WeCare.Data.DataAccess;
+using System.Configuration;
+using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Views
 {
@@ -14,25 +23,35 @@ namespace Views
     /// </summary>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        private IContainer _container;
+
+
+        public App()
+        {
+            ConfigureContainer();
+        }
+
+        public void ConfigureContainer()
+        {
+            var builder = new ContainerBuilder();
+      
+            builder.RegisterType<SqldataAccess>().As<ISqldataAccess>();
+            builder.RegisterType<DoctorService>().As<IDoctorService>();
+            builder.RegisterType<DoctorData>().As<IDoctorData>();
+            builder.RegisterType<CommonFunctions>().As<ICommonFunctions>(); 
+            builder.RegisterType<AddDoctorViewModel>();
+            _container = builder.Build();
+        
+        }
+
+
+        protected override void OnStartup( StartupEventArgs e)
         {
             base.OnStartup(e);
-            var builder = new ContainerBuilder();
-            builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
-          
-            builder.RegisterType<DoctorService>().As<IDoctorService>().SingleInstance();
-            builder.RegisterType<TestWindow>().AsSelf();
-            
-            IContainer container = builder.Build();
-            using (var scope = container.BeginLifetimeScope())
-            {
-               /* AddDoctorViewModel viewModel = container.Resolve<AddDoctorViewModel>();*/
-               var window=scope.Resolve<TestWindow>();   
-                window.Show();  
-            }
-
-
-
-        }                           
+            var viewModelLocator = new ViewModelLocator(_container);
+            var mainWindow = new TestWindow();
+            mainWindow.DataContext = viewModelLocator.MainViewModel;
+            mainWindow.Show();
+        }
     }
-}
+    }

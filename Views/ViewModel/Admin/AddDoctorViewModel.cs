@@ -1,22 +1,28 @@
 ﻿using MVVM_App.ViewModels;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Views.ViewModel.Common;
 using Wecare.Services.Interfaces;
 using static System.Net.Mime.MediaTypeNames;
-
+using System.Configuration;
+using System.Threading;
+using System.Collections.Generic;
+using WeCare.Data.Model;
 
 namespace Views.ViewModel.Admin
 {
     public class AddDoctorViewModel : ViewModelBase, IAddDoctorViewModel
     {
-        private string _department;
+        private IEnumerable<DepartmentModel> _department;
         private IDoctorService DocService;
         private string selectedDepartment;
         private string DocName;
         public ICommand AddDoctor { get; }
 
         #region Adding OnpropertyChanged
-        public string Department
+        public IEnumerable<DepartmentModel> Department
         {
             get { return _department; }
             set
@@ -27,9 +33,9 @@ namespace Views.ViewModel.Admin
 
             }
         }
-       
 
-     
+
+
         public string SelectedDepartment
         {
             get => selectedDepartment;
@@ -40,7 +46,7 @@ namespace Views.ViewModel.Admin
             }
         }
 
-     
+
         public string DocNameChange
         {
             get { return DocName; }
@@ -56,29 +62,24 @@ namespace Views.ViewModel.Admin
         }
         #endregion
 
-        private async Task LoadDepartment(IDoctorService doctorService)
+        public async Task<IEnumerable<DepartmentModel>> InitializeAsync()
+        { 
+            var department = await DocService.GetDepartment();
+            Department =department;
+            string s = Department.FirstOrDefault().ToString();
+            return Department;
+        }
+
+        public async Task LoadDepartment()
         {
-            if (doctorService != null)
-            {
-                DocService = doctorService;
-                var department = await DocService.GetDepartment();
-                Department = department;
-            }
-            else
-            {
-               
-            }
+            InitializeAsync().Wait();
         }
 
         public AddDoctorViewModel(IDoctorService doctorService)
         {
-            DocService= doctorService;
-            AddDoctor = new ViewModelCommand(ExecuteAddDoctor);
-            LoadDepartment(doctorService);
+            DocService = doctorService;
+            LoadDepartment();
 
-        }
-        public AddDoctorViewModel():this(null)
-        {
         }
 
 

@@ -16,12 +16,19 @@ namespace Wecare.Services.Service
             functions = _functions;
 
         }
-        #region Get the departments
-        public async Task<string?> GetDepartment()
-        {
-            var Department = await functions.GetDepartmentName();
-            return Department.FirstOrDefault().ToString();
 
+
+        #region Get the departments
+        public async Task<IEnumerable<DepartmentModel>> GetDepartment()
+        {
+           
+            var departmentResult = await functions.GetDepartmentName();
+            return departmentResult;
+        }
+        public async Task<string?> GetDocID(string DocName)
+        {
+            var docID = await functions.GetDoctorId(DocName);
+            return docID.ToString();
         }
         public async Task AddDoctor(string text, string selectedDepartment)
         {
@@ -36,10 +43,10 @@ namespace Wecare.Services.Service
         #region Update Doctor
         public async Task UpdateDoctor(string selectedDocName, string selectedDepartName)
         {
-           var getDoctorId= await functions.GetDoctorId(selectedDocName);
-           var getDepartmentId= await functions.GetDepartmentID(selectedDepartName);
-           var count= await dbAccess.CheckDocAvailability(getDoctorId.Doctor_Id);
-            if(count==null)
+            var getDoctorId = await functions.GetDoctorId(selectedDocName);
+            var getDepartmentId = await functions.GetDepartmentID(selectedDepartName);
+            var count = await dbAccess.CheckDocAvailability(getDoctorId.Doctor_Id);
+            if (count == null)
             {
                 string message = "You Cannot update!!!!The doctor is already booked";
             }

@@ -1,4 +1,5 @@
 using Autofac.Core;
+using Wecare.Data.Data.Common;
 using Wecare.Data.Data.User_Authentication;
 using WeCare.Data.Data.Appointment;
 using WeCare.Data.Data.Doctor;
@@ -15,6 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ISqldataAccess, SqldataAccess>();
 builder.Services.AddScoped<IDoctorData, DoctorData>();
+builder.Services.AddScoped<ICommonFunctions, CommonFunctions>();
+
+
 builder.Services.AddScoped<IViewAppointmentData, ViewAppointmentData>();
 builder.Services.AddScoped<IUserAuthenticationData, UserAuthenticationData>();
 var app = builder.Build();

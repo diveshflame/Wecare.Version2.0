@@ -15,14 +15,14 @@ namespace Wecare.Data.Data.Common
 
 
         #region Get Values
-        public Task<IEnumerable<DepartmentModel>> GetDepartmentName() => _db.LoadData<DepartmentModel, dynamic>(getDepartmentName, new { });
+        public async Task<IEnumerable<DepartmentModel>> GetDepartmentName() => await _db.LoadData<DepartmentModel, dynamic>(getDepartmentName, new { });
         public Task<IEnumerable<DoctorModel>> GetDoctorName() => _db.LoadData<DoctorModel, dynamic>(getDoctorName, new { });
 
 
-
-        public async Task<DoctorModel?> GetDoctorId(string selectedDoctorname)
+        
+        public async Task<DoctorModel?> GetDoctorId(string selectedDoctorName)
         {
-            var results = await _db.LoadData<DoctorModel, dynamic>(getDoctorId, new { DocName = selectedDoctorname });
+            var results = await _db.LoadData<DoctorModel, dynamic>(getDoctorId, new { DocName = selectedDoctorName });
             return results.FirstOrDefault();
         }
         public async Task<DepartmentModel?> GetDepartmentID(string selectedDepartName)

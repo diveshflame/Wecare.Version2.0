@@ -23,7 +23,7 @@ namespace Views.ViewModel.Admin
             }
         }
 
-                public AddTimingsViewModel() 
+        public AddTimingsViewModel() 
         {
 
             SelectionChangedCommand = new RelayCommand<EventArgs>(ExecuteSelectionChanged);

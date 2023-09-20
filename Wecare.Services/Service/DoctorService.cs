@@ -19,9 +19,9 @@ namespace Wecare.Services.Service
 
 
         #region Get the departments
-        public async Task<IEnumerable<DepartmentModel>> GetDepartment()
+        public async Task<List<string>> GetDepartment()
         {
-           
+
             var departmentResult = await functions.GetDepartmentName();
             return departmentResult;
         }
@@ -37,7 +37,7 @@ namespace Wecare.Services.Service
         }
         #endregion
         #region Display the values in view
-        public Task<IEnumerable<DepartmentModel>> GetDepartmentName() => functions.GetDepartmentName();
+        public Task<List<string>> GetDepartmentName() => functions.GetDepartmentName();
         public Task<IEnumerable<DoctorModel>> GetDoctorName() => functions.GetDoctorName();
         #endregion
         #region Update Doctor

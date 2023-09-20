@@ -19,7 +19,7 @@ namespace Wecare.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var data = await dbAccess.GetDoctorName();
+            var data = await dbAccess.GetDepartmentName();
             return Ok(data);
         }
 

@@ -15,19 +15,19 @@ namespace Views.ViewModel.Admin
 {
     public class AddDoctorViewModel : ViewModelBase, IAddDoctorViewModel
     {
-        private IEnumerable<DepartmentModel> _department;
+        private List<string> _department=new List<string>();    
         private IDoctorService DocService;
         private string selectedDepartment;
         private string DocName;
+        public string test;
         public ICommand AddDoctor { get; }
 
         #region Adding OnpropertyChanged
-        public IEnumerable<DepartmentModel> Department
+        public List<string> Department
         {
             get { return _department; }
             set
             {
-
                 _department = value;
                 OnPropertyChanged(nameof(Department));
 
@@ -62,23 +62,19 @@ namespace Views.ViewModel.Admin
         }
         #endregion
 
-        public async Task<IEnumerable<DepartmentModel>> InitializeAsync()
-        { 
+        public async Task<List<string?>> InitializeAsync()
+        {
             var department = await DocService.GetDepartment();
-            Department =department;
-            string s = Department.FirstOrDefault().ToString();
+            Department=department;  
             return Department;
         }
 
-        public async Task LoadDepartment()
-        {
-            InitializeAsync().Wait();
-        }
+
 
         public AddDoctorViewModel(IDoctorService doctorService)
         {
             DocService = doctorService;
-            LoadDepartment();
+            InitializeAsync();
 
         }
 

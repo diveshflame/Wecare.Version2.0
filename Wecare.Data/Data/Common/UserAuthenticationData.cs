@@ -1,4 +1,6 @@
 ﻿
+using System.Linq;
+using System.Threading.Tasks;
 using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
 

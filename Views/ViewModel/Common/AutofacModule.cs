@@ -6,7 +6,7 @@ public class AppModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        // Register your services and implementations here
+       
         builder.RegisterType<DoctorService>().As<IDoctorService>();
 
     }

@@ -1,5 +1,7 @@
 ﻿
 
+using System;
+
 namespace WeCare.Data.Model
 {
     public class AppointmentModel

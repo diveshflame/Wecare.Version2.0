@@ -1,4 +1,7 @@
-﻿using WeCare.Data.DataAccess;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
 
 namespace WeCare.Data.Data.Appointment

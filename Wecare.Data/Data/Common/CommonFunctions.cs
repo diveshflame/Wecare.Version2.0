@@ -1,4 +1,7 @@
 ﻿
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
 
@@ -15,11 +18,16 @@ namespace Wecare.Data.Data.Common
 
 
         #region Get Values
-        public async Task<IEnumerable<DepartmentModel>> GetDepartmentName() => await _db.LoadData<DepartmentModel, dynamic>(getDepartmentName, new { });
+
+        public async Task<List<string?>> GetDepartmentName()
+        {
+            var results = await _db.LoadData<DepartmentModel, dynamic>(getDepartmentName, new { });
+            var departmentNames = results.Select(department => department.Department_Name);
+            List<string> departmentNamesList = results.Select(department => department.Department_Name).ToList();
+            return departmentNamesList;
+        }
+
         public Task<IEnumerable<DoctorModel>> GetDoctorName() => _db.LoadData<DoctorModel, dynamic>(getDoctorName, new { });
-
-
-        
         public async Task<DoctorModel?> GetDoctorId(string selectedDoctorName)
         {
             var results = await _db.LoadData<DoctorModel, dynamic>(getDoctorId, new { DocName = selectedDoctorName });

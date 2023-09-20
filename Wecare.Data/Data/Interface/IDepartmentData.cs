@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using WeCare.Data.Model;
 
-namespace Wecare.Data.Data.Admin
+namespace Wecare.Data.Data.Interface
 {
     public interface IDepartmentData
     {

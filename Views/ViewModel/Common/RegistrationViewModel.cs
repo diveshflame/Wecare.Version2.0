@@ -45,7 +45,6 @@ namespace Views.ViewModel.Common
             this.userAuthService = userAuthService;
             UserDetails = new UserDetails();
             Genders = new List<string> { "Male", "Female", "Other" }; //To Be Changed
-
             RegisterCommand = new ViewModelCommand(Register, CanRegister);
         }
 
@@ -55,11 +54,11 @@ namespace Views.ViewModel.Common
             {
                 UserName = UserDetails.Username,
                 Name = UserDetails.FullName,
-                Age = UserDetails.Age,
+                Age = (int)UserDetails.Age,
                 Gender = UserDetails.Gender,
                 Email_Address = UserDetails.Email,
                 Phone_Number = UserDetails.PhoneNumber,
-                Password = UserDetails.Password,
+                Password = UserDetails.Password
             };
             try
             {
@@ -67,7 +66,7 @@ namespace Views.ViewModel.Common
             }
             catch (Exception ex)
             {
-
+                
             }
         }
 

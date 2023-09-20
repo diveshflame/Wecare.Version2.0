@@ -15,8 +15,8 @@ namespace Wecare.Services.Service
 
         public async Task<string?> GetDoctorNames()
         {
-            var DoctorNames = await _doctorAvailabilityData.GetDoctorNames();
-            return DoctorNames.FirstOrDefault().ToString();
+            var doctorNames = await _doctorAvailabilityData.GetDoctorNames();
+            return doctorNames.FirstOrDefault().ToString();
         }
 
         #endregion

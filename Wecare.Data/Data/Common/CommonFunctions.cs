@@ -33,6 +33,12 @@ namespace Wecare.Data.Data.Common
             var results = await _db.LoadData<DoctorModel, dynamic>(getDoctorId, new { DocName = selectedDoctorName });
             return results.FirstOrDefault();
         }
+
+        #endregion
+
+        # region Get Department ID
+        //To get the department Id using department name from department table
+        string getDepartmentId = "SELECT DEPARTMENT_ID FROM DEPARTMENT WHERE DEPARTMENT_NAME =@DeptName";
         public async Task<DepartmentModel?> GetDepartmentID(string selectedDepartName)
         {
             var results = await _db.LoadData<DepartmentModel, dynamic>(getDepartmentId, new { DeptName = selectedDepartName });
@@ -42,11 +48,5 @@ namespace Wecare.Data.Data.Common
 
 
 
-        #region Queries
-        string getDepartmentName = "SELECT DEPARTMENT_NAME FROM DEPARTMENT;";
-        string getDoctorName = "SELECT DOCTOR_NAME FROM DOCTOR;";
-        string getDoctorId = "SELECT DOCTOR_ID FROM DOCTOR WHERE DOCTOR_NAME = @DocName";
-        string getDepartmentId = "SELECT DEPARTMENT_ID FROM DEPARTMENT WHERE DEPARTMENT_NAME =@DeptName";
-        #endregion
     }
 }

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WeCare.Data.Model;
 
-namespace WeCare.Data.Data.Doctor
+namespace Wecare.Data.Data.Interface
 {
     public interface IDoctorData
     {

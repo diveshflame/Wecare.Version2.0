@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
-
+using Wecare.Data.Data.Interface;
 namespace Wecare.Data.Data.Common
 {
     public class CommonFunctions : ICommonFunctions
@@ -19,6 +19,7 @@ namespace Wecare.Data.Data.Common
 
         #region Get Values
 
+        string getDepartmentName = "SELECT DEPARTMENT_NAME FROM DEPARTMENT;";
         public async Task<List<string?>> GetDepartmentName()
         {
             var results = await _db.LoadData<DepartmentModel, dynamic>(getDepartmentName, new { });
@@ -26,8 +27,9 @@ namespace Wecare.Data.Data.Common
             List<string> departmentNamesList = results.Select(department => department.Department_Name).ToList();
             return departmentNamesList;
         }
-
+        string getDoctorName = "SELECT DOCTOR_NAME FROM DOCTOR;";
         public Task<IEnumerable<DoctorModel>> GetDoctorName() => _db.LoadData<DoctorModel, dynamic>(getDoctorName, new { });
+        string getDoctorId = "SELECT DOCTOR_ID FROM DOCTOR WHERE DOCTOR_NAME = @DocName";
         public async Task<DoctorModel?> GetDoctorId(string selectedDoctorName)
         {
             var results = await _db.LoadData<DoctorModel, dynamic>(getDoctorId, new { DocName = selectedDoctorName });

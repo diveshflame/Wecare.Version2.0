@@ -3,7 +3,7 @@ using Wecare.Data.Data.Common;
 using Wecare.Services.Interfaces;
 using WeCare.Data.Data.Doctor;
 using WeCare.Data.Model;
-
+using Wecare.Data.Data.Interface;
 namespace Wecare.Services.Service
 {
     public class DoctorService : IDoctorService

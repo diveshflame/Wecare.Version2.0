@@ -4,7 +4,7 @@ using Wecare.Data.Data.Common;
 using WeCare.Data.Data;
 
 using WeCare.Data.Model;
-
+using Wecare.Data.Data.Interface;
 namespace Wecare.Services.Service
 {
     public class AppointmentService : IAppointmentService

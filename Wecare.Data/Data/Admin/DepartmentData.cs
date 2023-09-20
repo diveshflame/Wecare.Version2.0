@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
+using Wecare.Data.Data.Interface;
 
 namespace Wecare.Data.Data.Admin
 {

@@ -15,6 +15,7 @@ using WeCare.Data.DataAccess;
 using System.Configuration;
 using System.Threading.Tasks;
 using System.Configuration;
+using Wecare.Data.Data.Interface;
 
 namespace Views
 {

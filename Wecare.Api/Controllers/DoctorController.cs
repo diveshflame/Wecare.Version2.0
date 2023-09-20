@@ -2,6 +2,7 @@
 using Wecare.Data.Data.Common;
 using WeCare.Data.Data.Doctor;
 using WeCare.Data.DataAccess;
+using Wecare.Data.Data.Interface;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

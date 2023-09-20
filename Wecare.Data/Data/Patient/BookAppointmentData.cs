@@ -3,8 +3,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WeCare.Data.Model;
-
-
+using Wecare.Data.Data.Interface;
+using WeCare.Data.DataAccess;
 
 namespace WeCare.Data.Data
 {

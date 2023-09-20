@@ -1,6 +1,7 @@
 ﻿
 using Wecare.Data.Data.Admin;
 using Wecare.Services.Interfaces;
+using Wecare.Data.Data.Interface;
 
 namespace Wecare.Services.Service
 {

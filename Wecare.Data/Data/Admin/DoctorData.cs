@@ -4,7 +4,7 @@ using WeCare.Data.Model;
 using Wecare.Data.Data.Common;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-
+using Wecare.Data.Data.Interface;
 namespace WeCare.Data.Data.Doctor
 {
     public class DoctorData : IDoctorData

@@ -1,4 +1,8 @@
-﻿namespace WeCare.Data.Model
+﻿
+
+using System;
+
+namespace WeCare.Data.Model
 {
     public class DoctorAvailabilityModel
     {

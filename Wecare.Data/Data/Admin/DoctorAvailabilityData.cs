@@ -1,5 +1,10 @@
-﻿using System.Data;
-using Wecare.Data.Data.Interface;
+﻿
+using WeCare.Data.DataAccess;
+using System.Data;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace WeCare.Data.Data.Doctor
 {

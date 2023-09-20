@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Views.Model;
 using Views.ViewModel.Admin;
 using Wecare.Services.Interfaces;
 using System.ComponentModel;
-using Microsoft.Win32;
-using Wecare.Services.Service;
 using WeCare.Data.Model;
-using Microsoft.VisualBasic.ApplicationServices;
 using MVVM_App.ViewModels;
 
 namespace Views.ViewModel.Common

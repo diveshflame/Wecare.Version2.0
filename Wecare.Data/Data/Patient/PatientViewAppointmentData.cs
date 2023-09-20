@@ -1,4 +1,6 @@
-﻿using Wecare.Data.Data.Interface;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
 

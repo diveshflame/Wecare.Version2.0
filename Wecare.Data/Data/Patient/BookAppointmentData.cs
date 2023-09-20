@@ -1,69 +1,64 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿
+using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WeCare.Data.Model;
-using Autofac;
 using Wecare.Data.Data.Interface;
+using WeCare.Data.DataAccess;
 
 namespace WeCare.Data.Data
 {
     public class BookAppointmentData : IBookAppointmentData
     {
-        private readonly ISqldataAccess dbAccess;
-        public BookAppointmentData(ISqldataAccess _dbAccess)
+        private readonly ISqldataAccess _dbAccess;
+        public BookAppointmentData(ISqldataAccess dbAccess)
         {
-            dbAccess = _dbAccess;
+            _dbAccess = dbAccess;
 
 
         }
 
-        public async Task<DoctorModel?> GetDoctorNames(string SelectedDepartment)
+        #region Get Doctor names according to department
+        public async Task<DoctorModel?> GetDoctorNames(string selectedDepartment)
         {
 
-            string GetDoc = @"SELECT d.Doctor_name FROM doctor d 
+            string getDoc = @"SELECT d.Doctor_name FROM doctor d 
                               JOIN department dp ON d.DEPARTMENT_ID = dp.Department_Id
                               WHERE dp.Department_Name = @SelectedDepartmentParameter;";
-            var result = await dbAccess.LoadData<DoctorModel, dynamic>(GetDoc, new { SelectedDepartmentParameter = SelectedDepartment });
+            var result = await _dbAccess.LoadData<DoctorModel, dynamic>(getDoc, new { SelectedDepartmentParameter = selectedDepartment });
 
             return result.FirstOrDefault();
 
         }
-       
+        #endregion
+
+        #region Getting available slot times
 
         public async Task<AppointmentModel?> GetDoctorAvailableTime(string doc, DateTime selectedDate)
         {
 
-            string GetTime = @"SELECT available_starttime, available_endtime
+            string getTime = @"SELECT da.available_starttime, da.available_endtime
                                 FROM doctor_availability da
-                                WHERE 
-                                    DATE(da.available_starttime) = @time
-                                    AND DATE(da.available_endtime) = @time
-                                    AND da.doctor_id = (
-                                        SELECT Doctor_Id
-                                        FROM doctor_table
-                                        WHERE Doctor_Name = @doctorName
-                                    )
-                                EXCEPT
-                                SELECT available_starttime, available_endtime
-                                FROM booking_table bt
-                                JOIN doctor_availability da ON bt.APPOINTMENT_STARTTIME = da.available_starttime
-                                WHERE bt.doctor_id = (
-                                    SELECT Doctor_Id
-                                    FROM doctor_table
-                                    WHERE Doctor_Name = @doctorName
-                                )
-                                AND bt.Deleted_TimeStamp IS NULL
-                                ORDER BY available_starttime, available_endtime;
+                                LEFT JOIN booking_table bt ON da.available_starttime = bt.APPOINTMENT_STARTTIME
+                                WHERE DATE(da.available_starttime) = @time
+                                  AND DATE(da.available_endtime) = @time
+                                  AND da.doctor_id = (
+                                      SELECT Doctor_Id
+                                      FROM doctor_table
+                                      WHERE Doctor_Name = @doctorName
+                                  )
+                                  AND (bt.doctor_id IS NULL OR bt.Deleted_TimeStamp IS NULL)
+                                ORDER BY da.available_starttime, da.available_endtime;
                                 ";
-            var results = await dbAccess.LoadData<AppointmentModel, dynamic>(GetTime, new { doctorName = doc, time = selectedDate });
+            var results = await _dbAccess.LoadData<AppointmentModel, dynamic>(getTime, new { doctorName = doc, time = selectedDate });
             return results.FirstOrDefault();
         }
+        #endregion
+
+        #region Get Department Id
         public async Task<AppointmentModel?> GetDepartmentIdForDoctor(string selectedDep, string doc)
         {
-            string GetDepartmentID = @"SELECT department_id AS id
+            string getDepartmentID = @"SELECT department_id AS id
                                         FROM department
                                         WHERE @depSelected = consultant_desc
 
@@ -75,32 +70,39 @@ namespace WeCare.Data.Data
                                         ";
 
 
-            var results2 = await dbAccess.LoadData<AppointmentModel, dynamic>(GetDepartmentID, new { docSelected = doc, depSelected = selectedDep });//add userid
+            var results2 = await _dbAccess.LoadData<AppointmentModel, dynamic>(getDepartmentID, new { docSelected = doc, depSelected = selectedDep });
 
             return results2.FirstOrDefault();
 
         }
+        #endregion
+
+        #region Getting the user ID
         public async Task<AppointmentModel?> GetUserID()
         {
             string userID = "SELECT userid from userdetails where active_session = 1";
-            var results2 = await dbAccess.LoadData<AppointmentModel, dynamic>(userID, new { });//add userid
+            var results2 = await _dbAccess.LoadData<AppointmentModel, dynamic>(userID, new { });//add userid
             return results2.FirstOrDefault();
         }
-        public async Task InsertAppointment(int UserID, string DeptID, DateTime selectedDate, string doc, DateTime StartTime, DateTime EndTime)
-        {
+        #endregion
 
-            string insertStatement = "INSERT INTO Booking_Table (userid,department_id,doctor_id,APPOINTMENT_STARTTIME,APPOINTMENT_ENDTIME) VALUES (@userID,@DeptType,@docSelected,@StartSlot,@EndSlot)";
+        #region Adding the Appointment
+                public async Task InsertAppointment(int UserID, string DeptID, DateTime selectedDate, string doc, DateTime StartTime, DateTime EndTime)
+                {
 
-            var parameters = new
-            {
-                docSelected = doc,
-                userID = UserID,
-                DeptType = DeptID,
-                StartSlot = StartTime,
-                EndSlot = EndTime
-            };
+                    string insertStatement = "INSERT INTO Booking_Table (userid,department_id,doctor_id,APPOINTMENT_STARTTIME,APPOINTMENT_ENDTIME) VALUES (@userID,@deptType,@docSelected,@startSlot,@endSlot)";
 
-            await dbAccess.SaveData(insertStatement, parameters);
-        }
+                    var parameters = new
+                    {
+                        docSelected = doc,
+                        userID = UserID,
+                        deptType = DeptID,
+                        startSlot = StartTime,
+                        endSlot = EndTime
+                    };
+
+                    await _dbAccess.SaveData(insertStatement, parameters);
+                }
+                #endregion
     }
 }

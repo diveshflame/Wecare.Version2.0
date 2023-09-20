@@ -1,6 +1,10 @@
-﻿using WeCare.Data.DataAccess;
+﻿
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WeCare.Data.DataAccess;
 using WeCare.Data.Model;
-
+using Wecare.Data.Data.Interface;
 namespace Wecare.Data.Data.Common
 {
     public class CommonFunctions : ICommonFunctions
@@ -11,25 +15,24 @@ namespace Wecare.Data.Data.Common
             _db = db;
         }
 
-        #region Get Department Name
-        //To get all the department name form the department Table
-        string getDepartmentName = "SELECT DEPARTMENT_NAME FROM DEPARTMENT;";
-        public Task<IEnumerable<DepartmentModel>> GetDepartmentName() => _db.LoadData<DepartmentModel, dynamic>(getDepartmentName, new { });
-        #endregion
 
-        #region Get Doctor Name
-        //To get all the doctor name form the doctor Table
+
+        #region Get Values
+
+        string getDepartmentName = "SELECT DEPARTMENT_NAME FROM DEPARTMENT;";
+        public async Task<List<string?>> GetDepartmentName()
+        {
+            var results = await _db.LoadData<DepartmentModel, dynamic>(getDepartmentName, new { });
+            var departmentNames = results.Select(department => department.Department_Name);
+            List<string> departmentNamesList = results.Select(department => department.Department_Name).ToList();
+            return departmentNamesList;
+        }
         string getDoctorName = "SELECT DOCTOR_NAME FROM DOCTOR;";
         public Task<IEnumerable<DoctorModel>> GetDoctorName() => _db.LoadData<DoctorModel, dynamic>(getDoctorName, new { });
-
-        #endregion
-
-        #region Get Doctor Id
-        //To get the doctor Id using doctor name from doctor table
         string getDoctorId = "SELECT DOCTOR_ID FROM DOCTOR WHERE DOCTOR_NAME = @DocName";
-        public async Task<DoctorModel?> GetDoctorId(string selectedDoctorname)
+        public async Task<DoctorModel?> GetDoctorId(string selectedDoctorName)
         {
-            var results = await _db.LoadData<DoctorModel, dynamic>(getDoctorId, new { DocName = selectedDoctorname });
+            var results = await _db.LoadData<DoctorModel, dynamic>(getDoctorId, new { DocName = selectedDoctorName });
             return results.FirstOrDefault();
         }
 

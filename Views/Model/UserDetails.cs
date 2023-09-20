@@ -1,4 +1,6 @@
-﻿namespace Views.Model
+﻿
+
+namespace Views.Model
 {
     public class UserDetails
     {

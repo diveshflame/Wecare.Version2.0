@@ -1,4 +1,5 @@
 ﻿
+
 namespace WeCare.Data.Model
 {
     public class DepartmentModel

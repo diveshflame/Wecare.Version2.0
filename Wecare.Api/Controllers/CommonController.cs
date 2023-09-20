@@ -1,56 +1,48 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Wecare.Data.Data.Common;
-using WeCare.Data.Data.Doctor;
-using WeCare.Data.DataAccess;
 using Wecare.Data.Data.Interface;
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Wecare.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DoctorController : ControllerBase
+    public class CommonController : ControllerBase
     {
         private readonly ICommonFunctions dbAccess;
-        public DoctorController(ICommonFunctions _dbAccess)
+        public CommonController(ICommonFunctions _dbAccess)
         {
             dbAccess = _dbAccess;
 
         }
-        // GET: api/<DoctorController>
+        // GET: api/<CommonController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-           
-            var data = await dbAccess.GetDoctorName();
+            var data = await dbAccess.GetDepartmentName();
             return Ok(data);
-
         }
 
-        // GET api/<DoctorController>/5
+        // GET api/<CommonController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<DoctorController>
+        // POST api/<CommonController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<DoctorController>/5
+        // PUT api/<CommonController>/5
         [HttpPut("{id}")]
-        public void Put([FromBody] int did, int ddid)
+        public void Put(int id, [FromBody] string value)
         {
-            int DocId = 1002;
-            int DeptId = 502;
-           /* dbAccess.UpdateDoc(DocId, DeptId);*/
         }
 
-        // DELETE api/<DoctorController>/5
+        // DELETE api/<CommonController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

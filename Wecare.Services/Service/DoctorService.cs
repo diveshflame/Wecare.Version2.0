@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wecare.Data.Data.Interface;
+﻿
+using Wecare.Data.Data.Common;
 using Wecare.Services.Interfaces;
-using WeCare.Data.Data;
+using WeCare.Data.Data.Doctor;
 using WeCare.Data.Model;
-
+using Wecare.Data.Data.Interface;
 namespace Wecare.Services.Service
 {
     public class DoctorService : IDoctorService
@@ -20,31 +16,37 @@ namespace Wecare.Services.Service
             functions = _functions;
 
         }
-        public async Task<string?> GetDepartment()
-        {
-            var Department = await functions.GetDepartmentName();
-            return Department.FirstOrDefault().ToString();
 
+
+        #region Get the departments
+        public async Task<List<string>> GetDepartment()
+        {
+
+            var departmentResult = await functions.GetDepartmentName();
+            return departmentResult;
+        }
+        public async Task<string?> GetDocID(string DocName)
+        {
+            var docID = await functions.GetDoctorId(DocName);
+            return docID.ToString();
         }
         public async Task AddDoctor(string text, string selectedDepartment)
         {
             await dbAccess.AddDoctor(text, selectedDepartment);
             string message = "Succesfully Inserted";
         }
-
+        #endregion
         #region Display the values in view
-        public Task<IEnumerable<DepartmentModel>> GetDepartmentName() => functions.GetDepartmentName();
+        public Task<List<string>> GetDepartmentName() => functions.GetDepartmentName();
         public Task<IEnumerable<DoctorModel>> GetDoctorName() => functions.GetDoctorName();
         #endregion
-
-
         #region Update Doctor
         public async Task UpdateDoctor(string selectedDocName, string selectedDepartName)
         {
-           var getDoctorId= await functions.GetDoctorId(selectedDocName);
-           var getDepartmentId= await functions.GetDepartmentID(selectedDepartName);
-           var count= await dbAccess.CheckDocAvailability(getDoctorId.Doctor_Id);
-            if(count==null)
+            var getDoctorId = await functions.GetDoctorId(selectedDocName);
+            var getDepartmentId = await functions.GetDepartmentID(selectedDepartName);
+            var count = await dbAccess.CheckDocAvailability(getDoctorId.Doctor_Id);
+            if (count == null)
             {
                 string message = "You Cannot update!!!!The doctor is already booked";
             }
